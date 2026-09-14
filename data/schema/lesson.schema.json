@@ -39,10 +39,13 @@
         "ageGroup": {
           "$ref": "#/$defs/ageGroup"
         },
+        "comingSoon": {
+          "type": "boolean",
+          "description": "true — тема в разработке (показывается на карте, но закрыта)."
+        },
         "items": {
           "type": "array",
-          "description": "Карточки темы: буквы, слова, цифры или цвета.",
-          "minItems": 1,
+          "description": "Карточки темы: буквы, слова, цифры или цвета. Может быть пустым, если тема ещё не готова.",
           "items": {
             "$ref": "#/$defs/item"
           }

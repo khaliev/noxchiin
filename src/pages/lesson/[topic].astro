@@ -1,0 +1,191 @@
+---
+// ============================================================================
+// [topic].astro — экран урока (мини-игра).
+// Генерирует по одной странице на каждую готовую тему (getStaticPaths).
+// Сервер отдаёт «каркас» (заголовок, описание — для SEO), а саму игру
+// монтирует клиентский скрипт lessonGame.js.
+// ============================================================================
+
+import Layout from '../../layouts/Layout.astro';
+import { getAllTopics } from '../../scripts/lessons.js';
+
+// Создаём страницы только для тем с реальным контентом.
+export function getStaticPaths() {
+  const topics = getAllTopics().filter((t) => !t.comingSoon && (t.items?.length ?? 0) > 0);
+  return topics.map((t) => ({ params: { topic: t.id }, props: { topic: t } }));
+}
+
+const { topic } = Astro.props;
+---
+
+<Layout title={`${topic.title.ru} — Нохчийн Мотт`} description={topic.description.ru}>
+  <section class="container section">
+    <header class="lesson-header">
+      <a href="/" class="lesson-header__back">← Все темы</a>
+      <span class="lesson-header__icon" aria-hidden="true">{topic.icon}</span>
+      <h1 class="lesson-header__title">{topic.title.ru}</h1>
+      <p class="lesson-header__ce">{topic.title.ce}</p>
+      <p class="lesson-header__desc">{topic.description.ru}</p>
+    </header>
+
+    <!-- Сюда клиентский скрипт монтирует игру -->
+    <div id="game" class="game-container" data-topic={topic.id}></div>
+  </section>
+</Layout>
+
+<script>
+  import { startLessonGame } from '../../scripts/lessonGame.js';
+  const container = document.getElementById('game');
+  const topicId = container?.dataset.topic;
+  if (container && topicId) {
+    startLessonGame(container, topicId);
+  }
+</script>
+
+<style>
+  .lesson-header {
+    text-align: center;
+    margin-bottom: var(--space-5);
+  }
+
+  .lesson-header__back {
+    display: inline-block;
+    margin-bottom: var(--space-3);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .lesson-header__icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: var(--space-2);
+  }
+
+  .lesson-header__title {
+    margin-bottom: var(--space-1);
+  }
+
+  .lesson-header__ce {
+    color: var(--color-primary-dark);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-2);
+  }
+
+  .lesson-header__desc {
+    color: var(--color-text-secondary);
+    max-width: 36rem;
+    margin-inline: auto;
+  }
+
+  .game-container {
+    max-width: 34rem;
+    margin-inline: auto;
+  }
+
+  /* --- Общие экраны игры (старт / нет сердечек / тема скоро) --- */
+  .game-screen {
+    background-color: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-border);
+    padding: var(--space-6);
+    text-align: center;
+  }
+
+  .game-screen--center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .game-screen__title {
+    margin-bottom: var(--space-1);
+  }
+
+  .game-screen__sub {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-4);
+  }
+
+  /* --- Шапка раунда --- */
+  .game__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .game__progress {
+    color: var(--color-text-secondary);
+  }
+
+  .game__hearts {
+    color: var(--color-accent);
+    font-size: var(--text-lg);
+    letter-spacing: 0.1em;
+  }
+
+  /* --- Блок озвучки --- */
+  .game__prompt {
+    text-align: center;
+    margin-bottom: var(--space-4);
+  }
+
+  .game__prompt-label {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-2);
+  }
+
+  .game__speaker {
+    font-size: 1.75rem;
+  }
+
+  .game__hint {
+    margin-top: var(--space-2);
+    color: var(--color-gold-dark);
+    background-color: var(--color-gold-bg);
+    border-radius: var(--radius-md);
+    padding: var(--space-2) var(--space-3);
+    font-weight: var(--font-weight-bold);
+  }
+
+  /* --- Варианты ответа --- */
+  .game__options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+
+  .choice__char {
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-black);
+    color: var(--color-primary-dark);
+  }
+
+  .choice__transcription {
+    font-size: var(--text-md);
+    color: var(--color-text-secondary);
+  }
+
+  /* --- Результат --- */
+  .stars--result {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: var(--space-2);
+  }
+
+  .modal__score {
+    font-size: var(--text-md);
+    margin-bottom: var(--space-1);
+  }
+
+  .modal__xp {
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-black);
+    color: var(--color-gold-dark);
+    margin-bottom: 0;
+  }
+</style>

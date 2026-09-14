@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "topic": {
+    "id": "numbers",
+    "title": { "ru": "Цифры", "ce": "Терахьаш" },
+    "description": {
+      "ru": "Числа от 1 до 20 — научись считать по-чеченски.",
+      "ce": "Терахьаш 1 тӀера 20 кхаччалц."
+    },
+    "order": 2,
+    "icon": "🔢",
+    "ageGroup": "all",
+    "comingSoon": true,
+    "items": []
+  }
+}

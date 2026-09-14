@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/build-sw.mjs",
+    "build:app": "astro build",
     "preview": "astro preview",
     "check": "astro check",
     "icons": "node scripts/generate-icons.mjs",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "typescript": "^6.0.3",
-    "vitest": "^5.0.0"
+    "vitest": "^5.0.0",
+    "workbox-build": "^7.4.1"
   }
 }

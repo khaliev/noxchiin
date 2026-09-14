@@ -1,195 +1,216 @@
 ---
 // ============================================================================
-// index.astro — главный экран приложения «Нохчийн Мотт».
-// На Этапе 1 показывает приветствие и демонстрирует работу дизайн-системы
-// и загрузку данных из JSON. На Этапе 2 здесь появится карта уроков.
+// index.astro — главный экран: карта тем (уроков).
+// Сервер рендерит карточки тем; клиентский скрипт topicMap.js добавляет
+// состояние разблокировки/звёзд из localStorage.
 // ============================================================================
 
 import Layout from '../layouts/Layout.astro';
-// Загружаем данные темы «Алфавит» из JSON-файла.
-// Это пример того, как НЕ хардкодить контент в код, а читать из /data.
-import alphabet from '../../data/lessons/alphabet.json';
+import { getAllTopics } from '../scripts/lessons.js';
 
-const letters = alphabet.topic.items;
-// Для демонстрации берём первые 6 букв.
-const previewLetters = letters.slice(0, 6);
+const topics = getAllTopics();
+const totalLessons = topics.filter((t) => !t.comingSoon).length;
 ---
 
 <Layout>
-  <section class="hero">
+  <section class="hero hero--compact">
     <div class="container">
-      <h1 class="hero__title">Учим чеченский язык <span>играя</span></h1>
-      <p class="hero__subtitle">
-        «Нохчийн Мотт» — это весёлая игра для детей и подростков от 5 лет.
-        Учи алфавит, цифры, цвета и слова — и не забывай язык своих близких.
-      </p>
-      <div class="hero__actions">
-        <a href="#alphabet" class="btn btn--primary btn--large">🚀 Начать учиться</a>
-        <button class="btn btn--secondary btn--large">🔊 Послушать пример</button>
-      </div>
+      <h1 class="hero__title">Нохчийн <span>Мотт</span></h1>
+      <p class="hero__subtitle">Учи чеченский язык играя — буква за буквой, слово за словом.</p>
     </div>
   </section>
 
-  <section class="container section" id="alphabet" aria-labelledby="alphabet-title">
+  <section class="container section" aria-labelledby="map-title">
     <div class="section__header">
-      <div>
-        <h2 id="alphabet-title">🔤 Тема 1 · Алфавит</h2>
-        <p class="section__meta">49 букв · 3 мини-игры</p>
-      </div>
-      <span class="stars" role="img" aria-label="0 звёзд из 3">
-        <span class="star">★</span><span class="star">★</span><span class="star">★</span>
-      </span>
+      <h2 id="map-title">Выбери тему</h2>
+      <p class="section__meta">{totalLessons} тем · от простого к сложному</p>
     </div>
 
-    <!-- Прогресс по теме (на Этапе 1 — пример) -->
-    <div class="progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Прогресс темы Алфавит">
-      <div class="progress__fill" style="width: 0%"></div>
-    </div>
-
-    <!-- Предпросмотр карточек-букв (загружены из JSON) -->
-    <div class="letter-grid">
+    <ol class="topic-map">
       {
-        previewLetters.map((letter) => (
-          <article class="card card--letter">
-            <span class="letter-card__char">{letter.chechen}</span>
-            <span class="letter-card__transcription">{letter.transcription}</span>
-            <span class="letter-card__hint">{letter.pronunciationHint ?? letter.russian}</span>
-          </article>
-        ))
+        topics.map((topic) => {
+          const comingSoon = Boolean(topic.comingSoon);
+          const itemCount = topic.items?.length ?? 0;
+          return (
+            <li
+              class="topic-card"
+              data-topic-id={topic.id}
+              data-order={topic.order}
+            >
+              {
+                comingSoon ? (
+                  <span class="topic-card__inner topic-card__inner--static">
+                    <span class="topic-card__icon" aria-hidden="true">{topic.icon}</span>
+                    <span class="topic-card__body">
+                      <span class="topic-card__title">{topic.title.ru}</span>
+                      <span class="topic-card__ce">{topic.title.ce}</span>
+                      <span class="topic-card__meta">скоро 🚀</span>
+                    </span>
+                  </span>
+                ) : (
+                  <a class="topic-card__inner" href={`/lesson/${topic.id}/`}>
+                    <span class="topic-card__icon" aria-hidden="true">{topic.icon}</span>
+                    <span class="topic-card__body">
+                      <span class="topic-card__title">{topic.title.ru}</span>
+                      <span class="topic-card__ce">{topic.title.ce}</span>
+                      <span class="topic-card__meta">{itemCount} карточек</span>
+                    </span>
+                    <span class="stars" data-stars aria-label="0 из 3 звёзд">
+                      <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                    </span>
+                  </a>
+                )
+              }
+              <span class="topic-card__lock" aria-hidden="true">🔒</span>
+            </li>
+          );
+        })
       }
-    </div>
+    </ol>
   </section>
 
-  <section class="container section" aria-labelledby="about-title">
-    <h2 id="about-title">Как это работает</h2>
+  <section class="container section" aria-labelledby="how-title">
+    <h2 id="how-title">Как играть</h2>
     <div class="feature-grid">
       <article class="card feature">
         <span class="feature__icon" aria-hidden="true">🎧</span>
-        <h3>Слушай и выбирай</h3>
-        <p>Слышишь звук — выбираешь нужную букву или слово.</p>
+        <h3>Слушай</h3>
+        <p>Нажми на кнопку и послушай, как звучит буква.</p>
+      </article>
+      <article class="card feature">
+        <span class="feature__icon" aria-hidden="true">👆</span>
+        <h3>Выбирай</h3>
+        <p>Найди правильную букву среди вариантов.</p>
       </article>
       <article class="card feature">
         <span class="feature__icon" aria-hidden="true">⭐</span>
-        <h3>Зарабатывай звёзды</h3>
-        <p>За каждый урок получаешь до 3 звёзд и очки опыта.</p>
-      </article>
-      <article class="card feature">
-        <span class="feature__icon" aria-hidden="true">🐺</span>
-        <h3>Играй с волчонком</h3>
-        <p>Дружелюбный маскот поможет и подбодрит тебя.</p>
+        <h3>Собирай звёзды</h3>
+        <p>Отвечай верно — получай звёзды и очки опыта.</p>
       </article>
     </div>
   </section>
 </Layout>
 
+<script>
+  import { mountTopicMap } from '../scripts/topicMap.js';
+  mountTopicMap();
+</script>
+
 <style>
-  .hero {
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-    color: #fff;
-    padding: var(--space-8) var(--space-4);
-    text-align: center;
+  .hero--compact {
+    padding: var(--space-6) var(--space-4);
   }
-
-  .hero__title {
-    color: #fff;
-    margin-bottom: var(--space-3);
+  .hero--compact .hero__title {
+    font-size: var(--text-xl);
   }
-
-  .hero__title span {
-    color: var(--color-gold);
-  }
-
-  .hero__subtitle {
-    max-width: 36rem;
-    margin-inline: auto;
-    font-size: var(--text-md);
-    color: #eafff2;
-    margin-bottom: var(--space-5);
-  }
-
-  .hero__actions {
-    display: flex;
-    gap: var(--space-3);
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .section {
-    padding-block: var(--space-7);
-  }
-
-  .section__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-3);
-    margin-bottom: var(--space-4);
-  }
-
-  .section__meta {
-    color: var(--color-text-secondary);
+  .hero--compact .hero__subtitle {
+    font-size: var(--text-base);
     margin-bottom: 0;
   }
 
-  .progress {
-    margin-bottom: var(--space-5);
-  }
-
-  .letter-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
-    gap: var(--space-3);
-  }
-
-  .card--letter {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-1);
-    padding: var(--space-4);
-  }
-
-  .letter-card__char {
-    font-size: var(--text-xl);
-    font-weight: var(--font-weight-black);
-    color: var(--color-primary-dark);
-  }
-
-  .letter-card__transcription {
-    font-size: var(--text-md);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-text);
-  }
-
-  .letter-card__hint {
-    font-size: var(--text-xs);
-    color: var(--color-text-muted);
-    text-align: center;
-  }
-
-  .feature-grid {
+  .topic-map {
+    list-style: none;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
     gap: var(--space-4);
   }
 
-  .feature {
+  .topic-card {
+    position: relative;
+    transition: transform var(--transition-fast);
+  }
+
+  .topic-card__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 2px solid var(--color-border);
+    color: var(--color-text);
+    text-decoration: none;
+    min-height: 7rem;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  a.topic-card__inner:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    text-decoration: none;
+  }
+
+  .topic-card__icon {
+    font-size: 2.5rem;
+    line-height: 1;
+  }
+
+  .topic-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    flex: 1;
+  }
+
+  .topic-card__title {
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-black);
+  }
+
+  .topic-card__ce {
+    color: var(--color-primary-dark);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .topic-card__meta {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  /* Заблокированная тема: приглушаем и показываем замок */
+  .topic-card__lock {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    font-size: 1.25rem;
+    display: none;
+  }
+
+  .topic-card--locked .topic-card__inner {
+    opacity: 0.55;
+    filter: grayscale(0.4);
+  }
+  .topic-card--locked .topic-card__lock {
+    display: block;
+  }
+  .topic-card--locked {
+    cursor: not-allowed;
+  }
+
+  /* Всплывающая подсказка */
+  #toast {
+    position: fixed;
+    left: 50%;
+    bottom: var(--space-6);
+    transform: translateX(-50%) translateY(150%);
+    background-color: var(--color-text);
+    color: #fff;
+    padding: var(--space-3) var(--space-5);
+    border-radius: var(--radius-pill);
+    font-weight: var(--font-weight-bold);
+    box-shadow: var(--shadow-lg);
+    transition: transform var(--transition-normal);
+    z-index: 200;
+    max-width: 90vw;
     text-align: center;
   }
-
-  .feature__icon {
-    font-size: 2.5rem;
-    display: block;
-    margin-bottom: var(--space-2);
+  #toast.toast--visible {
+    transform: translateX(-50%) translateY(0);
   }
 
-  .feature h3 {
-    margin-bottom: var(--space-2);
-  }
-
-  .feature p {
-    color: var(--color-text-secondary);
-    margin-bottom: 0;
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: var(--space-4);
   }
 </style>

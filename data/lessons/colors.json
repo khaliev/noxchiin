@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "topic": {
+    "id": "colors",
+    "title": { "ru": "Цвета", "ce": "Беснаш" },
+    "description": {
+      "ru": "Основные цвета — красный, синий, зелёный и другие.",
+      "ce": "Коьрта беснаш."
+    },
+    "order": 3,
+    "icon": "🎨",
+    "ageGroup": "all",
+    "comingSoon": true,
+    "items": []
+  }
+}
