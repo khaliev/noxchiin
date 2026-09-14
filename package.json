@@ -1,0 +1,31 @@
+{
+  "name": "noxchiin-mott",
+  "version": "0.1.0",
+  "description": "Нохчийн Мотт — PWA-игра для изучения чеченского языка детьми",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "icons": "node scripts/generate-icons.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [
+    "chechen",
+    "language",
+    "education",
+    "pwa",
+    "kids"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "astro": "^7.3.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.0"
+  }
+}

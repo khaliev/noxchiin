@@ -1,0 +1,170 @@
+---
+// ============================================================================
+// Layout.astro — базовый каркас каждой страницы приложения.
+// Семантический HTML5: <html lang> <head> <body> <header> <main> <footer>.
+// Сюда добавляются общие для всех экранов теги: шрифты, meta, манифест PWA.
+// ============================================================================
+
+// Заголовок и описание по умолчанию (можно переопределить на странице).
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Нохчийн Мотт — учим чеченский язык играя',
+  description = 'Бесплатная игра для детей и подростков: чеченский алфавит, цифры, цвета и слова в игровом формате.',
+} = Astro.props;
+
+// Абсолютный адрес сайта (берётся из astro.config.mjs) для Open Graph.
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- PWA: манифест, иконки и цвет темы -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#1b7a46" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+
+    <!-- Open Graph (превью при шаринге в соцсетях) — полная настройка в Этапе 6 -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="ru_RU" />
+
+    <!-- Шрифт Nunito (кириллица + латиница) с font-display: swap.
+         На Этапе 2 шрифт будет кэшироваться Service Worker для офлайн-режима. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/src/styles/global.css" />
+    <link rel="stylesheet" href="/src/styles/components.css" />
+
+    <!-- Пока нет интерактива (появится на Этапе 2) — JS подключаем лениво -->
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a class="brand" href="/">
+          <span class="brand__logo" aria-hidden="true">🐺</span>
+          <span class="brand__name">Нохчийн Мотт</span>
+        </a>
+
+        <!-- HUD-панель (жизни + опыт) — активна с Этапа 2.
+             Сейчас показываем как статичный предпросмотр. -->
+        <div class="site-header__hud" aria-label="Игровой счёт">
+          <span class="hud-item">
+            <span class="hearts" role="img" aria-label="3 сердца из 3">
+              <span class="heart">♥</span>
+              <span class="heart">♥</span>
+              <span class="heart">♥</span>
+            </span>
+          </span>
+          <span class="hud-item hud-item--xp">⭐ 0 XP</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>Нохчийн Мотт — проект для детей и подростков из чеченской диаспоры.</p>
+        <p class="site-footer__note">Учим язык дома и в дороге.</p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  /* Локальные стили каркаса (шапка и подвал общие для всех экранов) */
+  .site-header {
+    background-color: var(--color-primary);
+    color: #fff;
+    box-shadow: var(--shadow-md);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-block: var(--space-3);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: #fff;
+    text-decoration: none;
+  }
+  .brand:hover {
+    text-decoration: none;
+  }
+
+  .brand__logo {
+    font-size: 1.75rem;
+    line-height: 1;
+  }
+
+  .brand__name {
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-black);
+    letter-spacing: 0.02em;
+  }
+
+  .site-header__hud {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .hud-item {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-pill);
+    padding: var(--space-1) var(--space-3);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--text-sm);
+  }
+
+  .hud-item .hearts {
+    font-size: var(--text-md);
+  }
+
+  .site-footer {
+    background-color: var(--color-primary-dark);
+    color: #d1fae5;
+    text-align: center;
+    padding-block: var(--space-5);
+    margin-top: var(--space-8);
+  }
+  .site-footer p {
+    margin-bottom: var(--space-1);
+  }
+  .site-footer__note {
+    font-size: var(--text-sm);
+    opacity: 0.85;
+  }
+</style>

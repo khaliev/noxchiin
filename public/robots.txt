@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Аудио-файлы и иконки можно индексировать (они часть контента)
+Allow: /audio/
+Allow: /icons/
+
+Sitemap: https://noxchiin-mott.example.com/sitemap-index.xml

@@ -1,0 +1,195 @@
+---
+// ============================================================================
+// index.astro — главный экран приложения «Нохчийн Мотт».
+// На Этапе 1 показывает приветствие и демонстрирует работу дизайн-системы
+// и загрузку данных из JSON. На Этапе 2 здесь появится карта уроков.
+// ============================================================================
+
+import Layout from '../layouts/Layout.astro';
+// Загружаем данные темы «Алфавит» из JSON-файла.
+// Это пример того, как НЕ хардкодить контент в код, а читать из /data.
+import alphabet from '../../data/lessons/alphabet.json';
+
+const letters = alphabet.topic.items;
+// Для демонстрации берём первые 6 букв.
+const previewLetters = letters.slice(0, 6);
+---
+
+<Layout>
+  <section class="hero">
+    <div class="container">
+      <h1 class="hero__title">Учим чеченский язык <span>играя</span></h1>
+      <p class="hero__subtitle">
+        «Нохчийн Мотт» — это весёлая игра для детей и подростков от 5 лет.
+        Учи алфавит, цифры, цвета и слова — и не забывай язык своих близких.
+      </p>
+      <div class="hero__actions">
+        <a href="#alphabet" class="btn btn--primary btn--large">🚀 Начать учиться</a>
+        <button class="btn btn--secondary btn--large">🔊 Послушать пример</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="container section" id="alphabet" aria-labelledby="alphabet-title">
+    <div class="section__header">
+      <div>
+        <h2 id="alphabet-title">🔤 Тема 1 · Алфавит</h2>
+        <p class="section__meta">49 букв · 3 мини-игры</p>
+      </div>
+      <span class="stars" role="img" aria-label="0 звёзд из 3">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </span>
+    </div>
+
+    <!-- Прогресс по теме (на Этапе 1 — пример) -->
+    <div class="progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Прогресс темы Алфавит">
+      <div class="progress__fill" style="width: 0%"></div>
+    </div>
+
+    <!-- Предпросмотр карточек-букв (загружены из JSON) -->
+    <div class="letter-grid">
+      {
+        previewLetters.map((letter) => (
+          <article class="card card--letter">
+            <span class="letter-card__char">{letter.chechen}</span>
+            <span class="letter-card__transcription">{letter.transcription}</span>
+            <span class="letter-card__hint">{letter.pronunciationHint ?? letter.russian}</span>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="container section" aria-labelledby="about-title">
+    <h2 id="about-title">Как это работает</h2>
+    <div class="feature-grid">
+      <article class="card feature">
+        <span class="feature__icon" aria-hidden="true">🎧</span>
+        <h3>Слушай и выбирай</h3>
+        <p>Слышишь звук — выбираешь нужную букву или слово.</p>
+      </article>
+      <article class="card feature">
+        <span class="feature__icon" aria-hidden="true">⭐</span>
+        <h3>Зарабатывай звёзды</h3>
+        <p>За каждый урок получаешь до 3 звёзд и очки опыта.</p>
+      </article>
+      <article class="card feature">
+        <span class="feature__icon" aria-hidden="true">🐺</span>
+        <h3>Играй с волчонком</h3>
+        <p>Дружелюбный маскот поможет и подбодрит тебя.</p>
+      </article>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: #fff;
+    padding: var(--space-8) var(--space-4);
+    text-align: center;
+  }
+
+  .hero__title {
+    color: #fff;
+    margin-bottom: var(--space-3);
+  }
+
+  .hero__title span {
+    color: var(--color-gold);
+  }
+
+  .hero__subtitle {
+    max-width: 36rem;
+    margin-inline: auto;
+    font-size: var(--text-md);
+    color: #eafff2;
+    margin-bottom: var(--space-5);
+  }
+
+  .hero__actions {
+    display: flex;
+    gap: var(--space-3);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .section {
+    padding-block: var(--space-7);
+  }
+
+  .section__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+
+  .section__meta {
+    color: var(--color-text-secondary);
+    margin-bottom: 0;
+  }
+
+  .progress {
+    margin-bottom: var(--space-5);
+  }
+
+  .letter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+    gap: var(--space-3);
+  }
+
+  .card--letter {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-4);
+  }
+
+  .letter-card__char {
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-black);
+    color: var(--color-primary-dark);
+  }
+
+  .letter-card__transcription {
+    font-size: var(--text-md);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+  }
+
+  .letter-card__hint {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: var(--space-4);
+  }
+
+  .feature {
+    text-align: center;
+  }
+
+  .feature__icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: var(--space-2);
+  }
+
+  .feature h3 {
+    margin-bottom: var(--space-2);
+  }
+
+  .feature p {
+    color: var(--color-text-secondary);
+    margin-bottom: 0;
+  }
+</style>

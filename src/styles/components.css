@@ -1,0 +1,277 @@
+/* ==========================================================================
+   НОХЧИЙН МОТТ — Дизайн-система
+   Часть 2: КОМПОНЕНТЫ
+   Кнопка, карточка, модалка, прогресс-бар, счётчик сердечек и звёзд.
+   Все стили переиспользуются на каждом экране игры.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   КНОПКИ
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  text-align: center;
+  min-height: 3rem;               /* крупная цель касания (>= 44px) */
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast),
+              background-color var(--transition-fast);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Нажатие: лёгкое «вдавливание» — понятная детям обратная связь */
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--color-info);
+  outline-offset: 2px;
+}
+
+/* Основная кнопка — зелёная (главное действие) */
+.btn--primary {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+.btn--primary:hover {
+  background-color: var(--color-primary-dark);
+}
+
+/* Вторичная кнопка — контурная (менее важное действие) */
+.btn--secondary {
+  background-color: transparent;
+  color: var(--color-primary-dark);
+  border: 2px solid var(--color-primary);
+}
+.btn--secondary:hover {
+  background-color: var(--color-primary-bg);
+}
+
+/* Кнопка-призрак на цветном фоне */
+.btn--ghost {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text);
+  box-shadow: var(--shadow-sm);
+}
+.btn--ghost:hover {
+  background-color: #ffffff;
+}
+
+/* Опасное действие / «неправильно» */
+.btn--danger {
+  background-color: var(--color-accent);
+  color: #ffffff;
+}
+.btn--danger:hover {
+  background-color: var(--color-accent-dark);
+}
+
+/* Большая кнопка — для самых маленьких (5-8 лет) */
+.btn--large {
+  min-height: 4rem;
+  font-size: var(--text-lg);
+  padding-inline: var(--space-6);
+}
+
+/* Кнопка на весь блок (полная ширина) */
+.btn--block {
+  width: 100%;
+}
+
+/* Кнопка-иконка (круглая, например «воспроизвести звук») */
+.btn--icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 0;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-lg);
+}
+
+/* Неактивное (заблокированное) состояние — например, тема ещё закрыта */
+.btn[disabled],
+.btn--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   КАРТОЧКИ
+   -------------------------------------------------------------------------- */
+.card {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+}
+
+/* Карточка-опция ответа в мини-игре */
+.card--choice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 6rem;
+  padding: var(--space-4);
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast),
+              border-color var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+.card--choice:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+.card--choice:focus-visible {
+  outline: 3px solid var(--color-info);
+  outline-offset: 2px;
+}
+
+/* Состояние «правильный ответ» */
+.card--correct {
+  border-color: var(--color-success);
+  background-color: var(--color-success-bg);
+}
+
+/* Состояние «неправильный ответ» */
+.card--wrong {
+  border-color: var(--color-error);
+  background-color: var(--color-error-bg);
+}
+
+/* --------------------------------------------------------------------------
+   МОДАЛКА (диалоговое окно)
+   -------------------------------------------------------------------------- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(31, 41, 55, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  z-index: 100;
+}
+
+.modal {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  max-width: 30rem;
+  width: 100%;
+  padding: var(--space-6);
+  text-align: center;
+}
+
+.modal__title {
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-3);
+}
+
+.modal__body {
+  margin-bottom: var(--space-5);
+  color: var(--color-text-secondary);
+}
+
+.modal__actions {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* --------------------------------------------------------------------------
+   ПРОГРЕСС-БАР
+   -------------------------------------------------------------------------- */
+.progress {
+  width: 100%;
+  height: 1rem;
+  background-color: var(--color-border);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.progress__fill {
+  height: 100%;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-pill);
+  transition: width var(--transition-normal);
+}
+
+/* Цветовые варианты прогресса */
+.progress__fill--gold { background-color: var(--color-gold); }
+.progress__fill--accent { background-color: var(--color-accent); }
+
+/* --------------------------------------------------------------------------
+   СЧЁТЧИК СЕРДЕЧЕК (жизни)
+   -------------------------------------------------------------------------- */
+.hearts {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-lg);
+}
+
+/* Сердечко: заполнено красным, потеряно — серым */
+.heart {
+  color: var(--color-accent);
+  line-height: 1;
+  transition: transform var(--transition-fast), color var(--transition-normal);
+}
+
+.heart--empty {
+  color: var(--color-border);
+}
+
+/* Анимация «потеря сердечка» */
+.heart--lost {
+  animation: heart-lost 0.4s ease;
+}
+
+@keyframes heart-lost {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+/* --------------------------------------------------------------------------
+   СЧЁТЧИК ЗВЁЗД (награда за урок)
+   -------------------------------------------------------------------------- */
+.stars {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xl);
+}
+
+.star {
+  color: var(--color-border); /* незаработанная звезда */
+  line-height: 1;
+}
+
+.star--earned {
+  color: var(--color-gold);
+}
+
+/* Анимация «появление звезды» */
+.star--pop {
+  animation: star-pop 0.5s ease;
+}
+
+@keyframes star-pop {
+  0% { transform: scale(0); }
+  70% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}

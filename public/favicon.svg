@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Фон: фирменный зелёный -->
+  <rect width="64" height="64" rx="14" fill="#1b7a46" />
+  <!-- Волчонок: мордочка (белый круг) -->
+  <circle cx="32" cy="38" r="18" fill="#ffffff" />
+  <!-- Ушки (треугольники) -->
+  <polygon points="18,14 24,26 12,26" fill="#ffffff" />
+  <polygon points="46,14 52,26 40,26" fill="#ffffff" />
+  <!-- Глаза -->
+  <circle cx="26" cy="36" r="3" fill="#1f2937" />
+  <circle cx="38" cy="36" r="3" fill="#1f2937" />
+  <!-- Нос -->
+  <ellipse cx="32" cy="43" rx="3.5" ry="2.5" fill="#1f2937" />
+  <!-- Улыбка -->
+  <path d="M27 48 Q32 52 37 48" stroke="#1f2937" stroke-width="2" fill="none" stroke-linecap="round" />
+</svg>

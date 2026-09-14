@@ -1,0 +1,37 @@
+# Зависимости
+node_modules/
+
+# Сборка
+dist/
+.astro/
+
+# Логи
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Кэши и служебные файлы
+.cache/
+.temp/
+.vite/
+*.tsbuildinfo
+
+# Файлы ОС
+.DS_Store
+Thumbs.db
+
+# Файлы редакторов
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Секреты (если появятся)
+.env
+.env.*
+!.env.example
+
+# Временные аудио-записи (рабочие черновики не должны попадать в git)
+audio/tmp/
+*.wav.tmp

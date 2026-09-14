@@ -1,0 +1,531 @@
+{
+  "schemaVersion": 1,
+  "topic": {
+    "id": "alphabet",
+    "title": { "ru": "Алфавит", "ce": "Элп" },
+    "description": {
+      "ru": "49 букв чеченского алфавита. Слушай и запоминай, как звучит каждая буква.",
+      "ce": "Нохчийн абат — 49 элп. Хьала а ладог1аш, элп баккхий деша."
+    },
+    "order": 1,
+    "icon": "🔤",
+    "ageGroup": "all",
+    "items": [
+      {
+        "id": "letter-a",
+        "type": "letter",
+        "chechen": "А а",
+        "russian": "а",
+        "transcription": "а",
+        "pronunciationHint": "Как «а» в слове «мама».",
+        "audio": "/audio/alphabet/letter-a.mp3",
+        "image": "/icons/alphabet/letter-a.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-ae",
+        "type": "letter",
+        "chechen": "Аь аь",
+        "russian": "аь",
+        "transcription": "аь",
+        "pronunciationHint": "Мягкое гортанное «а» — между «а» и «э», произносится глубже в горле.",
+        "audio": "/audio/alphabet/letter-ae.mp3",
+        "image": "/icons/alphabet/letter-ae.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-b",
+        "type": "letter",
+        "chechen": "Б б",
+        "russian": "б",
+        "transcription": "б",
+        "audio": "/audio/alphabet/letter-b.mp3",
+        "image": "/icons/alphabet/letter-b.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-v",
+        "type": "letter",
+        "chechen": "В в",
+        "russian": "в",
+        "transcription": "в",
+        "audio": "/audio/alphabet/letter-v.mp3",
+        "image": "/icons/alphabet/letter-v.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-g",
+        "type": "letter",
+        "chechen": "Г г",
+        "russian": "г",
+        "transcription": "г",
+        "audio": "/audio/alphabet/letter-g.mp3",
+        "image": "/icons/alphabet/letter-g.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-gh",
+        "type": "letter",
+        "chechen": "ГӀ гӀ",
+        "russian": "гI",
+        "transcription": "гI",
+        "pronunciationHint": "Глубокое звонкое гортанное «г» — как арабский звук «айн» или французское «r».",
+        "audio": "/audio/alphabet/letter-gh.mp3",
+        "image": "/icons/alphabet/letter-gh.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-d",
+        "type": "letter",
+        "chechen": "Д д",
+        "russian": "д",
+        "transcription": "д",
+        "audio": "/audio/alphabet/letter-d.mp3",
+        "image": "/icons/alphabet/letter-d.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-e",
+        "type": "letter",
+        "chechen": "Е е",
+        "russian": "е",
+        "transcription": "е",
+        "pronunciationHint": "Как «йэ» (например, в слове «есть»).",
+        "audio": "/audio/alphabet/letter-e.mp3",
+        "image": "/icons/alphabet/letter-e.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-yo",
+        "type": "letter",
+        "chechen": "Ё ё",
+        "russian": "ё",
+        "transcription": "ё",
+        "pronunciationHint": "Как «йо».",
+        "audio": "/audio/alphabet/letter-yo.mp3",
+        "image": "/icons/alphabet/letter-yo.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-zh",
+        "type": "letter",
+        "chechen": "Ж ж",
+        "russian": "ж",
+        "transcription": "ж",
+        "audio": "/audio/alphabet/letter-zh.mp3",
+        "image": "/icons/alphabet/letter-zh.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-z",
+        "type": "letter",
+        "chechen": "З з",
+        "russian": "з",
+        "transcription": "з",
+        "audio": "/audio/alphabet/letter-z.mp3",
+        "image": "/icons/alphabet/letter-z.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-i",
+        "type": "letter",
+        "chechen": "И и",
+        "russian": "и",
+        "transcription": "и",
+        "audio": "/audio/alphabet/letter-i.mp3",
+        "image": "/icons/alphabet/letter-i.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-j",
+        "type": "letter",
+        "chechen": "Й й",
+        "russian": "й",
+        "transcription": "й",
+        "audio": "/audio/alphabet/letter-j.mp3",
+        "image": "/icons/alphabet/letter-j.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-k",
+        "type": "letter",
+        "chechen": "К к",
+        "russian": "к",
+        "transcription": "к",
+        "audio": "/audio/alphabet/letter-k.mp3",
+        "image": "/icons/alphabet/letter-k.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-kh",
+        "type": "letter",
+        "chechen": "Кх кх",
+        "russian": "кх",
+        "transcription": "кх",
+        "pronunciationHint": "Глубокое придыхательное «к» (увулярное), как арабское «каф».",
+        "audio": "/audio/alphabet/letter-kh.mp3",
+        "image": "/icons/alphabet/letter-kh.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-q",
+        "type": "letter",
+        "chechen": "Къ къ",
+        "russian": "къ",
+        "transcription": "къ",
+        "pronunciationHint": "Твёрдое смычное гортанное «к», как арабское «къаф».",
+        "audio": "/audio/alphabet/letter-q.mp3",
+        "image": "/icons/alphabet/letter-q.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-k1",
+        "type": "letter",
+        "chechen": "КӀ кӀ",
+        "russian": "кI",
+        "transcription": "кI",
+        "pronunciationHint": "Абруптивное «к» — резкое, с гортанной смычкой (щелчок в горле).",
+        "audio": "/audio/alphabet/letter-k1.mp3",
+        "image": "/icons/alphabet/letter-k1.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-l",
+        "type": "letter",
+        "chechen": "Л л",
+        "russian": "л",
+        "transcription": "л",
+        "audio": "/audio/alphabet/letter-l.mp3",
+        "image": "/icons/alphabet/letter-l.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-m",
+        "type": "letter",
+        "chechen": "М м",
+        "russian": "м",
+        "transcription": "м",
+        "audio": "/audio/alphabet/letter-m.mp3",
+        "image": "/icons/alphabet/letter-m.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-n",
+        "type": "letter",
+        "chechen": "Н н",
+        "russian": "н",
+        "transcription": "н",
+        "audio": "/audio/alphabet/letter-n.mp3",
+        "image": "/icons/alphabet/letter-n.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-o",
+        "type": "letter",
+        "chechen": "О о",
+        "russian": "о",
+        "transcription": "о",
+        "audio": "/audio/alphabet/letter-o.mp3",
+        "image": "/icons/alphabet/letter-o.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-oe",
+        "type": "letter",
+        "chechen": "Оь оь",
+        "russian": "оь",
+        "transcription": "оь",
+        "pronunciationHint": "Мягкое «о», как немецкое «ö» или французское «eu».",
+        "audio": "/audio/alphabet/letter-oe.mp3",
+        "image": "/icons/alphabet/letter-oe.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-p",
+        "type": "letter",
+        "chechen": "П п",
+        "russian": "п",
+        "transcription": "п",
+        "audio": "/audio/alphabet/letter-p.mp3",
+        "image": "/icons/alphabet/letter-p.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-p1",
+        "type": "letter",
+        "chechen": "ПӀ пӀ",
+        "russian": "пI",
+        "transcription": "пI",
+        "pronunciationHint": "Абруптивное «п» — резкое, с гортанной смычкой.",
+        "audio": "/audio/alphabet/letter-p1.mp3",
+        "image": "/icons/alphabet/letter-p1.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-r",
+        "type": "letter",
+        "chechen": "Р р",
+        "russian": "р",
+        "transcription": "р",
+        "audio": "/audio/alphabet/letter-r.mp3",
+        "image": "/icons/alphabet/letter-r.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-s",
+        "type": "letter",
+        "chechen": "С с",
+        "russian": "с",
+        "transcription": "с",
+        "audio": "/audio/alphabet/letter-s.mp3",
+        "image": "/icons/alphabet/letter-s.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-t",
+        "type": "letter",
+        "chechen": "Т т",
+        "russian": "т",
+        "transcription": "т",
+        "audio": "/audio/alphabet/letter-t.mp3",
+        "image": "/icons/alphabet/letter-t.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-t1",
+        "type": "letter",
+        "chechen": "ТӀ тӀ",
+        "russian": "тI",
+        "transcription": "тI",
+        "pronunciationHint": "Абруптивное «т» — резкое, с гортанной смычкой.",
+        "audio": "/audio/alphabet/letter-t1.mp3",
+        "image": "/icons/alphabet/letter-t1.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-u",
+        "type": "letter",
+        "chechen": "У у",
+        "russian": "у",
+        "transcription": "у",
+        "audio": "/audio/alphabet/letter-u.mp3",
+        "image": "/icons/alphabet/letter-u.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-ue",
+        "type": "letter",
+        "chechen": "Уь уь",
+        "russian": "уь",
+        "transcription": "уь",
+        "pronunciationHint": "Мягкое «у», как немецкое «ü» или французское «u».",
+        "audio": "/audio/alphabet/letter-ue.mp3",
+        "image": "/icons/alphabet/letter-ue.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-f",
+        "type": "letter",
+        "chechen": "Ф ф",
+        "russian": "ф",
+        "transcription": "ф",
+        "audio": "/audio/alphabet/letter-f.mp3",
+        "image": "/icons/alphabet/letter-f.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-h",
+        "type": "letter",
+        "chechen": "Х х",
+        "russian": "х",
+        "transcription": "х",
+        "pronunciationHint": "Глухое заднеязычное «х», как украинское «г».",
+        "audio": "/audio/alphabet/letter-h.mp3",
+        "image": "/icons/alphabet/letter-h.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-hh",
+        "type": "letter",
+        "chechen": "Хь хь",
+        "russian": "хь",
+        "transcription": "хь",
+        "pronunciationHint": "Мягкое фарингальное «х», произносится глубоко в горле.",
+        "audio": "/audio/alphabet/letter-hh.mp3",
+        "image": "/icons/alphabet/letter-hh.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-h1",
+        "type": "letter",
+        "chechen": "ХӀ хӀ",
+        "russian": "хI",
+        "transcription": "хI",
+        "pronunciationHint": "Сильное гортанное «х» (глухое фарингальное).",
+        "audio": "/audio/alphabet/letter-h1.mp3",
+        "image": "/icons/alphabet/letter-h1.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-c",
+        "type": "letter",
+        "chechen": "Ц ц",
+        "russian": "ц",
+        "transcription": "ц",
+        "audio": "/audio/alphabet/letter-c.mp3",
+        "image": "/icons/alphabet/letter-c.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-c1",
+        "type": "letter",
+        "chechen": "ЦӀ цӀ",
+        "russian": "цI",
+        "transcription": "цI",
+        "pronunciationHint": "Абруптивное «ц» — резкое, с гортанной смычкой.",
+        "audio": "/audio/alphabet/letter-c1.mp3",
+        "image": "/icons/alphabet/letter-c1.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-ch",
+        "type": "letter",
+        "chechen": "Ч ч",
+        "russian": "ч",
+        "transcription": "ч",
+        "audio": "/audio/alphabet/letter-ch.mp3",
+        "image": "/icons/alphabet/letter-ch.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-ch1",
+        "type": "letter",
+        "chechen": "ЧӀ чӀ",
+        "russian": "чI",
+        "transcription": "чI",
+        "pronunciationHint": "Абруптивное «ч» — резкое, с гортанной смычкой.",
+        "audio": "/audio/alphabet/letter-ch1.mp3",
+        "image": "/icons/alphabet/letter-ch1.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-sh",
+        "type": "letter",
+        "chechen": "Ш ш",
+        "russian": "ш",
+        "transcription": "ш",
+        "audio": "/audio/alphabet/letter-sh.mp3",
+        "image": "/icons/alphabet/letter-sh.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-shch",
+        "type": "letter",
+        "chechen": "Щ щ",
+        "russian": "щ",
+        "transcription": "щ",
+        "pronunciationHint": "Встречается редко, в основном в заимствованных словах.",
+        "audio": "/audio/alphabet/letter-shch.mp3",
+        "image": "/icons/alphabet/letter-shch.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-hard-sign",
+        "type": "letter",
+        "chechen": "Ъ ъ",
+        "russian": "ъ",
+        "transcription": "ъ",
+        "pronunciationHint": "Твёрдый знак — встречается редко.",
+        "audio": "/audio/alphabet/letter-hard-sign.mp3",
+        "image": "/icons/alphabet/letter-hard-sign.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-y",
+        "type": "letter",
+        "chechen": "Ы ы",
+        "russian": "ы",
+        "transcription": "ы",
+        "audio": "/audio/alphabet/letter-y.mp3",
+        "image": "/icons/alphabet/letter-y.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-soft-sign",
+        "type": "letter",
+        "chechen": "Ь ь",
+        "russian": "ь",
+        "transcription": "ь",
+        "pronunciationHint": "Мягкий знак — смягчает предыдущую согласную.",
+        "audio": "/audio/alphabet/letter-soft-sign.mp3",
+        "image": "/icons/alphabet/letter-soft-sign.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-eh",
+        "type": "letter",
+        "chechen": "Э э",
+        "russian": "э",
+        "transcription": "э",
+        "audio": "/audio/alphabet/letter-eh.mp3",
+        "image": "/icons/alphabet/letter-eh.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-yu",
+        "type": "letter",
+        "chechen": "Ю ю",
+        "russian": "ю",
+        "transcription": "ю",
+        "pronunciationHint": "Как «йу».",
+        "audio": "/audio/alphabet/letter-yu.mp3",
+        "image": "/icons/alphabet/letter-yu.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-yue",
+        "type": "letter",
+        "chechen": "Юь юь",
+        "russian": "юь",
+        "transcription": "юь",
+        "pronunciationHint": "Мягкое «ю».",
+        "audio": "/audio/alphabet/letter-yue.mp3",
+        "image": "/icons/alphabet/letter-yue.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-ya",
+        "type": "letter",
+        "chechen": "Я я",
+        "russian": "я",
+        "transcription": "я",
+        "pronunciationHint": "Как «йа».",
+        "audio": "/audio/alphabet/letter-ya.mp3",
+        "image": "/icons/alphabet/letter-ya.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-yae",
+        "type": "letter",
+        "chechen": "Яь яь",
+        "russian": "яь",
+        "transcription": "яь",
+        "pronunciationHint": "Мягкое «я».",
+        "audio": "/audio/alphabet/letter-yae.mp3",
+        "image": "/icons/alphabet/letter-yae.svg",
+        "ageGroup": "all"
+      },
+      {
+        "id": "letter-palochka",
+        "type": "letter",
+        "chechen": "Ӏ Ӏ",
+        "russian": "I (палочка)",
+        "transcription": "I",
+        "pronunciationHint": "Гортанная смычка — короткая пауза в горле, как при слове «о-о». Уникальная буква кавказских языков.",
+        "audio": "/audio/alphabet/letter-palochka.mp3",
+        "image": "/icons/alphabet/letter-palochka.svg",
+        "ageGroup": "all"
+      }
+    ]
+  }
+}

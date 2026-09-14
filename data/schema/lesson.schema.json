@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://noxchiin-mott.example.com/schema/lesson.schema.json",
+  "title": "Тема урока «Нохчийн Мотт»",
+  "description": "Описывает структуру одного файла-темы (алфавит, цифры, цвета и т.д.). Каждая тема лежит в отдельном JSON-файле в папке /data/lessons.",
+  "type": "object",
+  "required": ["schemaVersion", "topic"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "description": "Версия схемы данных (для миграции при будущих изменениях).",
+      "const": 1
+    },
+    "topic": {
+      "type": "object",
+      "required": ["id", "title", "order", "items"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Уникальный машинный идентификатор темы, например 'alphabet'."
+        },
+        "title": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "description": {
+          "$ref": "#/$defs/localizedText"
+        },
+        "order": {
+          "type": "integer",
+          "description": "Порядковый номер темы для карты уроков и разблокировки.",
+          "minimum": 1
+        },
+        "icon": {
+          "type": "string",
+          "description": "Эмодзи или путь к иконке темы."
+        },
+        "ageGroup": {
+          "$ref": "#/$defs/ageGroup"
+        },
+        "items": {
+          "type": "array",
+          "description": "Карточки темы: буквы, слова, цифры или цвета.",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/item"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "localizedText": {
+      "type": "object",
+      "description": "Текст на нескольких языках. Обязателен русский (ru) и чеченский (ce).",
+      "required": ["ru", "ce"],
+      "additionalProperties": false,
+      "properties": {
+        "ru": { "type": "string" },
+        "ce": { "type": "string" },
+        "en": { "type": "string" }
+      }
+    },
+    "ageGroup": {
+      "type": "string",
+      "enum": ["all", "5-8", "9+"],
+      "description": "Возрастная группа, для которой подходит материал."
+    },
+    "item": {
+      "type": "object",
+      "required": ["id", "type", "chechen", "russian", "transcription", "audio"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Уникальный id карточки (совпадает с именем аудиофайла без расширения)."
+        },
+        "type": {
+          "type": "string",
+          "enum": ["letter", "word", "number", "color"],
+          "description": "Тип карточки — влияет на то, какие мини-игры можно собрать."
+        },
+        "chechen": {
+          "type": "string",
+          "description": "Буква/слово/цифра/цвет на чеченском языке."
+        },
+        "russian": {
+          "type": "string",
+          "description": "Перевод на русский язык."
+        },
+        "transcription": {
+          "type": "string",
+          "description": "Транскрипция русскими буквами (приблизительная)."
+        },
+        "pronunciationHint": {
+          "type": "string",
+          "description": "Подсказка, как произнести (сравнение со знакомым звуком)."
+        },
+        "audio": {
+          "type": "string",
+          "description": "Путь к аудиофайлу от корня сайта, например '/audio/alphabet/a.mp3'."
+        },
+        "image": {
+          "type": "string",
+          "description": "Путь к картинке/иконке от корня сайта."
+        },
+        "example": {
+          "$ref": "#/$defs/localizedText",
+          "description": "Пример слова с этой буквой (для букв)."
+        },
+        "ageGroup": {
+          "$ref": "#/$defs/ageGroup"
+        }
+      }
+    }
+  }
+}
