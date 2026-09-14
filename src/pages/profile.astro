@@ -1,0 +1,191 @@
+---
+// ============================================================================
+// profile.astro — профиль игрока (имя, аватар, уровень, статистика, серия).
+// Сервер отдаёт каркас (для SEO), содержимое заполняется на клиенте из localStorage.
+// ============================================================================
+
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Профиль — Нохчийн Мотт" description="Профиль игрока: уровень, статистика и ежедневная серия.">
+  <section class="container section">
+    <header class="page-header">
+      <a href="/" class="page-header__back">← На главную</a>
+      <h1 class="page-header__title">Профиль</h1>
+    </header>
+
+    <div id="profile" class="profile-container"></div>
+  </section>
+</Layout>
+
+<script>
+  import { mountProfile } from '../scripts/profile.js';
+  const container = document.getElementById('profile');
+  if (container) mountProfile(container);
+</script>
+
+<style>
+  .page-header {
+    text-align: center;
+    margin-bottom: var(--space-5);
+  }
+  .page-header__back {
+    display: inline-block;
+    margin-bottom: var(--space-3);
+    font-weight: var(--font-weight-bold);
+  }
+  .page-header__title {
+    margin-bottom: 0;
+  }
+
+  .profile-container {
+    max-width: 34rem;
+    margin-inline: auto;
+  }
+
+  /* Карточка игрока */
+  .profile-card {
+    background-color: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-border);
+    padding: var(--space-5);
+    text-align: center;
+    margin-bottom: var(--space-4);
+  }
+
+  .profile-card__avatar {
+    font-size: 4rem;
+    line-height: 1;
+    display: block;
+    margin-bottom: var(--space-2);
+  }
+
+  .profile-card__name {
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-black);
+    margin-bottom: var(--space-1);
+  }
+
+  .profile-card__level {
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-3);
+  }
+
+  /* Выбор аватара */
+  .avatar-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    justify-content: center;
+    margin-bottom: var(--space-3);
+  }
+  .avatar-picker__btn {
+    font-size: 1.75rem;
+    width: 3rem;
+    height: 3rem;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+    cursor: pointer;
+    transition: transform var(--transition-fast), border-color var(--transition-fast);
+  }
+  .avatar-picker__btn--active {
+    border-color: var(--color-primary);
+    background: var(--color-primary-bg);
+  }
+  .avatar-picker__btn:active {
+    transform: scale(0.9);
+  }
+
+  /* Ввод имени */
+  .name-form {
+    display: flex;
+    gap: var(--space-2);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .name-form__input {
+    font-family: inherit;
+    font-size: var(--text-md);
+    padding: var(--space-2) var(--space-3);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    min-width: 10rem;
+  }
+  .name-form__input:focus-visible {
+    outline: 3px solid var(--color-info);
+    outline-offset: 1px;
+  }
+
+  /* Статистика */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+  .stat {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    text-align: center;
+  }
+  .stat__value {
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-black);
+    color: var(--color-primary-dark);
+  }
+  .stat__label {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+  }
+
+  /* Календарь серии */
+  .calendar {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+  .calendar__title {
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-3);
+    text-align: center;
+  }
+  .calendar__row {
+    display: flex;
+    gap: var(--space-1);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .calendar__day {
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-xs);
+    background-color: var(--color-border);
+    color: var(--color-text-muted);
+  }
+  .calendar__day--played {
+    background-color: var(--color-primary);
+    color: #fff;
+  }
+  .calendar__day--today {
+    outline: 3px solid var(--color-gold);
+    outline-offset: 1px;
+  }
+
+  .modal__streak {
+    color: var(--color-accent);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 0;
+  }
+</style>

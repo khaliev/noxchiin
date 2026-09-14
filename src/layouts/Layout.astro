@@ -74,9 +74,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
           <span class="brand__name">Нохчийн Мотт</span>
         </a>
 
-        <!-- HUD-панель (жизни + опыт). Заполняется на клиенте скриптом hud.js,
-             потому что прогресс хранится в localStorage (недоступен при сборке). -->
+        <!-- HUD-панель (жизни + серия + опыт). Заполняется на клиенте скриптом
+             hud.js, потому что прогресс хранится в localStorage. -->
         <div class="site-header__hud" aria-label="Игровой счёт">
+          <span class="hud-item hud-item--streak" id="hud-streak">🔥 0</span>
           <span class="hud-item">
             <span id="hud-hearts" class="hearts" role="img" aria-label="Сердечки"></span>
           </span>
@@ -93,6 +94,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
       <div class="container">
         <p>Нохчийн Мотт — проект для детей и подростков из чеченской диаспоры.</p>
         <p class="site-footer__note">Учим язык дома и в дороге.</p>
+        <nav class="site-footer__nav" aria-label="Дополнительные страницы">
+          <a href="/profile/">Профиль</a>
+          <a href="/parents/">Для родителей</a>
+        </nav>
       </div>
     </footer>
 
@@ -176,5 +181,21 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
   .site-footer__note {
     font-size: var(--text-sm);
     opacity: 0.85;
+  }
+
+  .site-footer__nav {
+    margin-top: var(--space-3);
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .site-footer__nav a {
+    color: #d1fae5;
+    font-weight: var(--font-weight-bold);
+    text-decoration: underline;
+  }
+  .site-footer__nav a:hover {
+    color: #fff;
   }
 </style>

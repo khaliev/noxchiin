@@ -51,6 +51,7 @@ export function createDefaultState() {
       current: 0,
       best: 0,
       lastPlayed: null, // строка YYYY-MM-DD последней игры
+      playedDates: [], // история посещений (массив строк YYYY-MM-DD)
     },
     updatedAt: null,
   };
@@ -99,6 +100,10 @@ function normalizeState(raw) {
   state.streak = { ...base.streak, ...(raw.streak ?? {}) };
   state.streak.current = Number(state.streak.current) || 0;
   state.streak.best = Number(state.streak.best) || 0;
+  // playedDates должен быть массивом строк (защита от битых данных).
+  state.streak.playedDates = Array.isArray(state.streak.playedDates)
+    ? state.streak.playedDates.filter((d) => typeof d === 'string')
+    : [];
 
   state.version = SCHEMA_VERSION;
   return state;

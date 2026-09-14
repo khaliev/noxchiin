@@ -54,12 +54,17 @@
 - `gamification.js` — чистые функции: звёзды, XP, уровень, сердечки.
 - `quiz.js` — генерация вопросов (выбор правильного + дистракторы).
 - `spelling.js` — разбивка чеченского слова на буквы-графемы (для игры «собери слово»).
+- `streak.js` — ежедневная серия и календарь посещений.
+- `sanitize.js` — санитизация пользовательского ввода (имя профиля).
+- `notifications.js` — уведомления (Notification API + SW, только по кнопке).
+- `sfx.js` — короткие звуковые эффекты «верно/неверно».
 - `audioPlayer.js` — проигрывание звука с обработкой ошибок.
 - `ageMode.js` — возрастные режимы (5–8 / 9+).
 - `games/` — мини-игры: `listenChoose`, `matchPairs`, `spellWord`, `speedQuiz`.
-- `hud.js` / `topicMap.js` / `lessonGame.js` — клиентские контроллеры DOM
-  (шапка, карта тем, диспетчер урока).
+- `hud.js` / `topicMap.js` / `lessonGame.js` / `profile.js` / `parents.js` —
+  клиентские контроллеры DOM (шапка, карта тем, урок, профиль, родительский уголок).
 - `scripts/build-sw.mjs` — сборка Service Worker (Workbox) после `astro build`.
+- `scripts/generate-icons.mjs`, `scripts/generate-sfx.mjs` — генераторы ассетов.
 
 ## Дизайн-система
 

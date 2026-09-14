@@ -14,6 +14,8 @@ import { loadState, saveState } from './storage.js';
 import { applyLessonResult, loseHeart, applyHeartRestore } from './gamification.js';
 import { updateHud } from './hud.js';
 import { applyAgeMode } from './ageMode.js';
+import { updateStreak } from './streak.js';
+import { playSfx } from './sfx.js';
 import { el } from './games/helpers.js';
 import * as listenChoose from './games/listenChoose.js';
 import * as matchPairs from './games/matchPairs.js';
@@ -89,10 +91,12 @@ export function startLessonGame(container, topicId) {
         if (isRight) {
           correct++;
           mascotSay(mascot, pick(HAPPY), 'happy');
+          playSfx('correct');
         } else {
           state = loseHeart(state);
           updateHud(state);
           mascotSay(mascot, pick(SAD), 'sad');
+          playSfx('wrong');
           if (state.hearts.count <= 0) {
             finished = true;
             stop();
@@ -110,9 +114,11 @@ export function startLessonGame(container, topicId) {
     function finishLesson(c, t) {
       const result = applyLessonResult(state, { topicId, correct: c, total: t });
       state = result.state;
+      // Занятие сегодня — обновляем ежедневную серию.
+      state = updateStreak(state);
       saveState(state, storage);
       updateHud(state);
-      renderResult(container, { correct: c, total: t, stars: result.stars, xp: result.xp }, topicId);
+      renderResult(container, { correct: c, total: t, stars: result.stars, xp: result.xp, streak: state.streak.current }, topicId);
     }
   }
 }
@@ -196,8 +202,8 @@ function renderNoHearts(container) {
   container.replaceChildren(wrap);
 }
 
-/** Экран результата урока (звёзды + XP). */
-function renderResult(container, { correct, total, stars, xp }, topicId) {
+/** Экран результата урока (звёзды + XP + серия). */
+function renderResult(container, { correct, total, stars, xp, streak = 0 }, topicId) {
   const wrap = el('div', 'modal-backdrop');
   const modal = el('div', 'modal');
   modal.setAttribute('role', 'dialog');
@@ -218,6 +224,10 @@ function renderResult(container, { correct, total, stars, xp }, topicId) {
     el('p', 'modal__score', `Правильных ответов: ${correct} из ${total}`),
     el('p', 'modal__xp', `+${xp} XP`),
   );
+
+  if (streak > 0) {
+    body.appendChild(el('p', 'modal__streak', `🔥 Серия: ${streak} дн.`));
+  }
 
   const actions = el('div', 'modal__actions');
   const again = el('a', 'btn btn--secondary', '🔁 Ещё раз');

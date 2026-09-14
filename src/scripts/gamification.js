@@ -14,6 +14,23 @@ const XP_PER_LEVEL = 100;
 export const HEART_RESTORE_MS = 15 * 60 * 1000; // 15 минут
 
 /**
+ * Считает, сколько карточек (слов/букв/цифр) игрок уже «выучил» —
+ * суммарно по всем завершённым темам.
+ * @param {object} state — состояние игрока.
+ * @param {Array} topics — список тем (из lessons.js).
+ * @returns {number} Количество выученных карточек.
+ */
+export function countLearnedItems(state, topics) {
+  let count = 0;
+  for (const topic of topics) {
+    if (state.topics[topic.id]?.completed) {
+      count += topic.items?.length ?? 0;
+    }
+  }
+  return count;
+}
+
+/**
  * Считает звёзды (1–3) за урок по доле правильных ответов.
  * @param {number} correct — количество правильных ответов.
  * @param {number} total — общее количество вопросов.

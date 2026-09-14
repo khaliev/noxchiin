@@ -1,0 +1,131 @@
+---
+// ============================================================================
+// parents.astro — «Родительский уголок»: статистика прогресса ребёнка.
+// Без авторизации — всё локально на устройстве.
+// ============================================================================
+
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Для родителей — Нохчийн Мотт" description="Статистика прогресса ребёнка: очки, уровень, пройденные темы.">
+  <section class="container section">
+    <header class="page-header">
+      <a href="/" class="page-header__back">← На главную</a>
+      <h1 class="page-header__title">Для родителей</h1>
+      <p class="page-header__sub">Прогресс хранится только на этом устройстве — без аккаунтов и передачи данных.</p>
+    </header>
+
+    <div id="parents" class="parents-container"></div>
+  </section>
+</Layout>
+
+<script>
+  import { mountParents } from '../scripts/parents.js';
+  const container = document.getElementById('parents');
+  if (container) mountParents(container);
+</script>
+
+<style>
+  .page-header {
+    text-align: center;
+    margin-bottom: var(--space-5);
+  }
+  .page-header__back {
+    display: inline-block;
+    margin-bottom: var(--space-3);
+    font-weight: var(--font-weight-bold);
+  }
+  .page-header__title {
+    margin-bottom: var(--space-1);
+  }
+  .page-header__sub {
+    color: var(--color-text-secondary);
+    max-width: 30rem;
+    margin-inline: auto;
+  }
+
+  .parents-container {
+    max-width: 34rem;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .panel {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: var(--space-5);
+  }
+  .panel__title {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-3);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+  .stat {
+    background-color: var(--color-bg);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    text-align: center;
+  }
+  .stat__value {
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-black);
+    color: var(--color-primary-dark);
+  }
+  .stat__label {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .topic-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-block: var(--space-2);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .topic-row:last-child {
+    border-bottom: none;
+  }
+  .topic-row__name {
+    font-weight: var(--font-weight-bold);
+  }
+  .topic-row__stars {
+    color: var(--color-gold);
+    font-size: var(--text-md);
+  }
+
+  .setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+  .setting-row:last-child {
+    margin-bottom: 0;
+  }
+  .setting-row__label {
+    font-weight: var(--font-weight-bold);
+  }
+  .setting-row__hint {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .danger-zone {
+    border-color: var(--color-accent);
+  }
+  .danger-zone .panel__title {
+    color: var(--color-accent-dark);
+  }
+</style>

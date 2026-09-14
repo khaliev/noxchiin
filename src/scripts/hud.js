@@ -14,6 +14,12 @@ import { levelFromXp } from './gamification.js';
 export function updateHud(state) {
   const heartsEl = document.getElementById('hud-hearts');
   const xpEl = document.getElementById('hud-xp');
+  const streakEl = document.getElementById('hud-streak');
+
+  if (streakEl) {
+    streakEl.textContent = `🔥 ${state.streak.current}`;
+    streakEl.setAttribute('aria-label', `Серия: ${state.streak.current} дней`);
+  }
 
   if (heartsEl) {
     const { count, max } = state.hearts;

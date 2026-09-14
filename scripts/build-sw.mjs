@@ -31,7 +31,7 @@ const { count, size } = await generateSW({
   globDirectory: 'dist',
 
   // Что precache'ить (app shell). Всё статичное из сборки.
-  globPatterns: ['**/*.{js,css,html,svg,png,ico,webmanifest,mp3,ogg}'],
+  globPatterns: ['**/*.{js,css,html,svg,png,ico,webmanifest,mp3,ogg,wav}'],
 
   // Офлайн-заглушка для навигации по незакэшированным маршрутам.
   navigateFallback: '/offline.html',
