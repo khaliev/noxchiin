@@ -76,3 +76,35 @@ export function getPreviousTopic(topicId) {
   if (index <= 0) return null;
   return topics[index - 1];
 }
+
+/**
+ * Возвращает список графем (букв, включая диграфы «аь», «гӏ», «кӏ» и т.д.)
+ * чеченского алфавита. Нужно для игры «собери слово из букв».
+ * Сортируем по длине по убыванию, чтобы при разбивке слова сначала
+ * совпадали длинные диграфы.
+ * @returns {string[]} Массив графем (в нижнем регистре).
+ */
+export function getGraphemes() {
+  const alphabet = getTopic('alphabet');
+  if (!alphabet) return [];
+  const set = new Set();
+  for (const item of alphabet.items) {
+    // В поле chechen графема записана как «А а», «Аь аь» — берём часть после пробела.
+    const grapheme = item.chechen.split(' ')[1] ?? item.chechen;
+    set.add(grapheme);
+  }
+  return [...set].sort((a, b) => b.length - a.length);
+}
+
+/**
+ * Фильтрует карточки по возрастной группе.
+ * В режиме «5-8» убираем сложные карточки (помеченные как «9+»).
+ * В режиме «9+» показываем всё.
+ * @param {Array} items — карточки темы.
+ * @param {string} [ageGroup] — '5-8' или '9+'.
+ * @returns {Array} Отфильтрованный массив.
+ */
+export function filterItemsByAge(items, ageGroup) {
+  if (!ageGroup || ageGroup === '9+') return items;
+  return items.filter((item) => !item.ageGroup || item.ageGroup !== '9+');
+}

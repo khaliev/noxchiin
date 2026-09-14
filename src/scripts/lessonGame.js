@@ -1,24 +1,36 @@
 // ============================================================================
-// lessonGame.js — контроллер урока (мини-игра «выбери правильный ответ по звуку»).
+// lessonGame.js — диспетчер урока: выбор мини-игры и общий результат.
 // ============================================================================
-// Оркестрирует клиентскую часть урока: экран старта, вопросы, ответы,
-// сердечки, итоговый результат. Работает с чистыми модулями (quiz, gamification,
-// storage) и модулем AudioPlayer — сам не считает очки, а только управляет DOM.
+// Отвечает за «обвязку» вокруг каждой мини-игры:
+//   - экран старта с выбором типа игры
+//   - сердечки (жизни) и подсчёт правильных ответов
+//   - маскот-волчонок с реакцией на ответы
+//   - итоговый результат (звёзды + XP) и сохранение прогресса
+// Сами мини-игры лежат в папке games/ и не знают про сердечки/звёзды.
 // ============================================================================
 
-import { getTopicItems } from './lessons.js';
-import { buildSession, isCorrect } from './quiz.js';
-import { AudioPlayer } from './audioPlayer.js';
+import { getTopic, getTopicItems, filterItemsByAge } from './lessons.js';
 import { loadState, saveState } from './storage.js';
 import { applyLessonResult, loseHeart, applyHeartRestore } from './gamification.js';
 import { updateHud } from './hud.js';
+import { applyAgeMode } from './ageMode.js';
+import { el } from './games/helpers.js';
+import * as listenChoose from './games/listenChoose.js';
+import * as matchPairs from './games/matchPairs.js';
+import * as spellWord from './games/spellWord.js';
+import * as speedQuiz from './games/speedQuiz.js';
 
-/** Сколько вопросов в одном уроке. */
-const QUESTIONS_PER_LESSON = 6;
-/** Сколько вариантов ответа показывать. */
-const NUM_OPTIONS = 4;
-/** Задержка перед переходом к следующему вопросу (мс). */
-const FEEDBACK_DELAY = 900;
+/** Реестр доступных мини-игр. */
+const GAMES = {
+  listen: { title: 'Слушай и выбирай', emoji: '🎧', module: listenChoose, rounds: 6 },
+  match: { title: 'Найди пары', emoji: '🔗', module: matchPairs, rounds: 4 },
+  spell: { title: 'Собери слово', emoji: '🧩', module: spellWord, rounds: 4 },
+  speed: { title: 'На скорость', emoji: '⏱️', module: speedQuiz, rounds: 6 },
+};
+
+// Фразы маскота для обратной связи
+const HAPPY = ['Молодец! 🎉', 'Отлично! ⭐', 'Точно! 💪', 'Супер! 🐾'];
+const SAD = ['Попробуй ещё! 💚', 'Не сдавайся!', 'Почти! 🌟'];
 
 /**
  * Запускает урок в указанном контейнере.
@@ -26,174 +38,134 @@ const FEEDBACK_DELAY = 900;
  * @param {string} topicId — id темы (например 'alphabet').
  */
 export function startLessonGame(container, topicId) {
-  const player = new AudioPlayer();
-  const items = getTopicItems(topicId);
-
-  // Тема ещё не готова (нет карточек)
-  if (items.length === 0) {
+  const topic = getTopic(topicId);
+  if (!topic) {
     renderComingSoon(container);
     return;
   }
 
   const storage = window.localStorage;
-  // Восстанавливаем сердечки по таймеру сразу при входе.
   let state = applyHeartRestore(loadState(storage));
+  const ageGroup = applyAgeMode(state);
 
-  renderStart(container, topicId, () => {
-    // Ребёнок нажал «Начать» — это пользовательский жест, аудио разрешено.
+  const items = filterItemsByAge(getTopicItems(topicId), ageGroup);
+  if (items.length === 0) {
+    renderComingSoon(container);
+    return;
+  }
+
+  const availableGames = topic.games?.length ? topic.games : ['listen'];
+
+  renderStart(container, topic, availableGames, (gameId) => begin(gameId));
+
+  /** Начинает выбранную мини-игру. */
+  function begin(gameId) {
+    const game = GAMES[gameId];
+    if (!game) return;
+
     if (state.hearts.count <= 0) {
       renderNoHearts(container);
       return;
     }
-    const session = buildSession(items, {
-      questionCount: QUESTIONS_PER_LESSON,
-      numOptions: NUM_OPTIONS,
-    });
-    runRound(container, session);
-  });
 
-  // --------------------------------------------------------------------------
-  // Локальные функции
-  // --------------------------------------------------------------------------
+    const root = el('div', 'game');
+    const mascot = renderMascot();
+    const gameArea = el('div', 'game__area');
+    root.append(mascot.wrap, gameArea);
+    container.replaceChildren(root);
 
-  /** Запускает раунд из набора вопросов. */
-  function runRound(root, session) {
-    let index = 0;
     let correct = 0;
+    let total = 0;
+    let finished = false;
 
-    showQuestion();
+    const stop = game.module.start(gameArea, items, {
+      rounds: game.rounds,
+      hearts: state.hearts,
+      distractorCount: ageGroup === '9+' ? 2 : 0,
+      timeLimit: ageGroup === '9+' ? 6000 : 10000,
+      onAnswer: (isRight) => {
+        if (finished) return;
+        total++;
+        if (isRight) {
+          correct++;
+          mascotSay(mascot, pick(HAPPY), 'happy');
+        } else {
+          state = loseHeart(state);
+          updateHud(state);
+          mascotSay(mascot, pick(SAD), 'sad');
+          if (state.hearts.count <= 0) {
+            finished = true;
+            stop();
+            finishLesson(correct, total);
+          }
+        }
+      },
+      onDone: () => {
+        if (finished) return;
+        finished = true;
+        finishLesson(correct, total);
+      },
+    });
 
-    /** Показывает текущий вопрос. */
-    function showQuestion() {
-      updateHud(state);
-
-      if (index >= session.length) {
-        finish();
-        return;
-      }
-
-      const question = session[index];
-      const target = question.target;
-
-      // --- Шапка раунда ---
-      const top = el('div', 'game__top');
-      const counter = el('span', 'game__progress', `Вопрос ${index + 1} из ${session.length}`);
-      const hearts = el('span', 'game__hearts');
-      hearts.textContent = '♥'.repeat(state.hearts.count) + '♡'.repeat(Math.max(0, state.hearts.max - state.hearts.count));
-      hearts.setAttribute('aria-label', `${state.hearts.count} сердечек`);
-      top.append(counter, hearts);
-
-      // --- Блок озвучки ---
-      const prompt = el('div', 'game__prompt');
-      const label = el('p', 'game__prompt-label', 'Слушай и выбери букву');
-      const speaker = el('button', 'btn btn--icon btn--primary game__speaker', '🔊');
-      speaker.setAttribute('aria-label', 'Послушать ещё раз');
-      const hint = el('p', 'game__hint', '');
-      hint.hidden = true;
-      prompt.append(label, speaker, hint);
-
-      // --- Варианты ответа ---
-      const options = el('div', 'game__options');
-      options.setAttribute('role', 'group');
-      options.setAttribute('aria-label', 'Варианты ответа');
-
-      root.replaceChildren(top, prompt, options);
-
-      // Проигрываем звук; если файла нет — показываем подсказку с транскрипцией.
-      playPrompt(target, speaker, hint);
-
-      speaker.addEventListener('click', () => playPrompt(target, speaker, hint));
-
-      // Строим кнопки-варианты
-      for (const item of question.options) {
-        const btn = el('button', 'card card--choice');
-        btn.type = 'button';
-        btn.dataset.itemId = item.id;
-
-        const char = el('span', 'choice__char', item.chechen);
-        const tr = el('span', 'choice__transcription', item.transcription);
-        btn.append(char, tr);
-
-        btn.addEventListener('click', () => onAnswer(question, btn, item.id));
-        options.appendChild(btn);
-      }
-    }
-
-    /** Обрабатывает выбор ответа. */
-    function onAnswer(question, clickedBtn, chosenId) {
-      const buttons = [...container.querySelectorAll('.card--choice')];
-      buttons.forEach((b) => (b.disabled = true));
-
-      const right = isCorrect(question, chosenId);
-      const correctBtn = buttons.find((b) => b.dataset.itemId === question.target.id);
-
-      if (right) {
-        clickedBtn.classList.add('card--correct');
-        correct++;
-      } else {
-        clickedBtn.classList.add('card--wrong');
-        correctBtn?.classList.add('card--correct');
-        state = loseHeart(state);
-        updateHud(state);
-      }
-
-      index++;
-
-      // Сердечки кончились — урок заканчивается досрочно.
-      if (state.hearts.count <= 0) {
-        setTimeout(finish, FEEDBACK_DELAY);
-      } else {
-        setTimeout(showQuestion, FEEDBACK_DELAY);
-      }
-    }
-
-    /** Завершает урок и показывает результат. */
-    function finish() {
-      const total = session.length;
-      const result = applyLessonResult(state, { topicId, correct, total });
+    function finishLesson(c, t) {
+      const result = applyLessonResult(state, { topicId, correct: c, total: t });
       state = result.state;
       saveState(state, storage);
       updateHud(state);
-      renderResult(container, { correct, total, stars: result.stars, xp: result.xp }, topicId);
+      renderResult(container, { correct: c, total: t, stars: result.stars, xp: result.xp }, topicId);
     }
   }
-
-  /** Проигрывает звук вопроса; при ошибке показывает подсказку-транскрипцию. */
-  function playPrompt(target, speakerEl, hintEl) {
-    player
-      .play(target.audio)
-      .then(() => {
-        hintEl.hidden = true;
-      })
-      .catch(() => {
-        // Аудио ещё нет (плейсхолдер) — показываем понятную подсказку, а не тишину.
-        hintEl.hidden = false;
-        hintEl.textContent = `🔇 Звук скоро появится. Подсказка: «${target.transcription}»`;
-        speakerEl.textContent = '🔇';
-      });
-  }
 }
 
 // ============================================================================
-// Вспомогательные функции рендеринга
+// Маскот-волчонок
 // ============================================================================
 
-/** Создаёт DOM-элемент с классами и текстом (безопасно, через textContent). */
-function el(tag, className = '', text = '') {
-  const node = document.createElement(tag);
-  if (className) node.className = className;
-  if (text) node.textContent = text;
-  return node;
+/** Создаёт элемент маскота (волчонок + облачко с репликой). */
+function renderMascot() {
+  const wrap = el('div', 'mascot');
+  const bubble = el('div', 'mascot__bubble', '');
+  bubble.hidden = true;
+  const wolf = el('div', 'mascot__wolf', '🐺');
+  wolf.setAttribute('aria-hidden', 'true');
+  wrap.append(bubble, wolf);
+  return { wrap, bubble, wolf };
 }
 
-/** Экран старта урока. */
-function renderStart(container, topicId, onStart) {
+/** Показывает реплику маскота с анимацией. */
+function mascotSay(mascot, text, kind) {
+  mascot.bubble.textContent = text;
+  mascot.bubble.hidden = false;
+  const wolf = mascot.wolf;
+  wolf.classList.remove('mascot--bounce', 'mascot--shake', 'mascot--happy', 'mascot--sad');
+  void wolf.offsetWidth; // перезапуск CSS-анимации
+  wolf.classList.add(kind === 'happy' ? 'mascot--happy mascot--bounce' : 'mascot--sad mascot--shake');
+}
+
+function pick(list) {
+  return list[Math.floor(Math.random() * list.length)];
+}
+
+// ============================================================================
+// Экраны (старт / результат / заглушки)
+// ============================================================================
+
+/** Экран старта с выбором типа игры. */
+function renderStart(container, topic, availableGames, onPick) {
   const wrap = el('div', 'game-screen game-screen--center');
-  const title = el('h2', 'game-screen__title', 'Готов(а) учиться?');
-  const sub = el('p', 'game-screen__sub', 'Слушай звук и выбирай правильную букву. За ошибку теряется сердечко!');
-  const startBtn = el('button', 'btn btn--primary btn--large', '▶ Начать');
-  startBtn.addEventListener('click', onStart);
-  wrap.append(title, sub, startBtn);
+  wrap.appendChild(el('h2', 'game-screen__title', topic.title.ru));
+  wrap.appendChild(el('p', 'game-screen__sub', 'Выбери игру. За ошибку теряется сердечко!'));
+
+  const list = el('div', 'game-picker');
+  for (const gameId of availableGames) {
+    const game = GAMES[gameId];
+    if (!game) continue;
+    const btn = el('button', 'btn btn--secondary btn--large game-picker__btn');
+    btn.innerHTML = `<span aria-hidden="true">${game.emoji}</span> ${game.title}`;
+    btn.addEventListener('click', () => onPick(gameId));
+    list.appendChild(btn);
+  }
+  wrap.appendChild(list);
   container.replaceChildren(wrap);
 }
 
@@ -228,9 +200,9 @@ function renderResult(container, { correct, total, stars, xp }, topicId) {
   modal.setAttribute('role', 'dialog');
   modal.setAttribute('aria-modal', 'true');
 
-  const title = el('h2', 'modal__title', stars > 0 ? 'Отлично!' : 'Хорошая попытка!');
-  const body = el('div', 'modal__body');
+  modal.appendChild(el('h2', 'modal__title', stars > 0 ? 'Отлично!' : 'Хорошая попытка!'));
 
+  const body = el('div', 'modal__body');
   const starsRow = el('div', 'stars stars--result');
   for (let i = 0; i < 3; i++) {
     const s = el('span', `star ${i < stars ? 'star--earned star--pop' : ''}`, '★');
@@ -238,11 +210,11 @@ function renderResult(container, { correct, total, stars, xp }, topicId) {
     starsRow.appendChild(s);
   }
   starsRow.setAttribute('aria-label', `${stars} из 3 звёзд`);
-
-  const score = el('p', 'modal__score', `Правильных ответов: ${correct} из ${total}`);
-  const xpText = el('p', 'modal__xp', `+${xp} XP`);
-
-  body.append(starsRow, score, xpText);
+  body.append(
+    starsRow,
+    el('p', 'modal__score', `Правильных ответов: ${correct} из ${total}`),
+    el('p', 'modal__xp', `+${xp} XP`),
+  );
 
   const actions = el('div', 'modal__actions');
   const again = el('a', 'btn btn--secondary', '🔁 Ещё раз');
@@ -251,7 +223,7 @@ function renderResult(container, { correct, total, stars, xp }, topicId) {
   home.href = '/';
   actions.append(again, home);
 
-  modal.append(title, body, actions);
+  modal.append(body, actions);
   wrap.appendChild(modal);
   container.replaceChildren(wrap);
 }

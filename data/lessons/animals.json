@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "topic": {
+    "id": "animals",
+    "title": { "ru": "Животные", "ce": "Дийнаташ" },
+    "description": {
+      "ru": "Животные — от волка до лошади.",
+      "ce": "Дийнаташ: борз, говр кхин а."
+    },
+    "order": 6,
+    "icon": "🐺",
+    "ageGroup": "all",
+    "games": ["match", "listen"],
+    "items": [
+      { "id": "animal-wolf", "type": "word", "chechen": "борз", "russian": "волк", "transcription": "борз", "emoji": "🐺", "audio": "/audio/animals/animal-wolf.mp3", "ageGroup": "all" },
+      { "id": "animal-dog", "type": "word", "chechen": "жӀаьла", "russian": "собака", "transcription": "жIаьла", "emoji": "🐶", "audio": "/audio/animals/animal-dog.mp3", "ageGroup": "all" },
+      { "id": "animal-cat", "type": "word", "chechen": "цициг", "russian": "кошка", "transcription": "цициг", "emoji": "🐱", "audio": "/audio/animals/animal-cat.mp3", "ageGroup": "all" },
+      { "id": "animal-horse", "type": "word", "chechen": "говр", "russian": "лошадь", "transcription": "говр", "emoji": "🐴", "audio": "/audio/animals/animal-horse.mp3", "ageGroup": "all" },
+      { "id": "animal-cow", "type": "word", "chechen": "етт", "russian": "корова", "transcription": "етт", "emoji": "🐄", "audio": "/audio/animals/animal-cow.mp3", "ageGroup": "all" },
+      { "id": "animal-sheep", "type": "word", "chechen": "уьстагӀ", "russian": "овца", "transcription": "уьстагI", "emoji": "🐑", "audio": "/audio/animals/animal-sheep.mp3", "ageGroup": "all" },
+      { "id": "animal-bird", "type": "word", "chechen": "олхазар", "russian": "птица", "transcription": "олхазар", "emoji": "🐦", "audio": "/audio/animals/animal-bird.mp3", "ageGroup": "all" },
+      { "id": "animal-bear", "type": "word", "chechen": "ча", "russian": "медведь", "transcription": "ча", "emoji": "🐻", "audio": "/audio/animals/animal-bear.mp3", "ageGroup": "all" },
+      { "id": "animal-fox", "type": "word", "chechen": "цхьогал", "russian": "лиса", "transcription": "цхьогал", "emoji": "🦊", "audio": "/audio/animals/animal-fox.mp3", "ageGroup": "9+" }
+    ]
+  }
+}

@@ -188,4 +188,169 @@ const { topic } = Astro.props;
     color: var(--color-gold-dark);
     margin-bottom: 0;
   }
+
+  /* --- Выбор игры (экран старта) --- */
+  .game-picker {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    width: 100%;
+  }
+
+  /* --- Маскот-волчонок --- */
+  .mascot {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+  }
+
+  .mascot__wolf {
+    font-size: 2.75rem;
+    line-height: 1;
+  }
+
+  .mascot__bubble {
+    background-color: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-2) var(--space-3);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .mascot--bounce {
+    animation: mascot-bounce 0.4s ease;
+  }
+  @keyframes mascot-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .mascot--shake {
+    animation: mascot-shake 0.4s ease;
+  }
+  @keyframes mascot-shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+  }
+
+  /* --- Карточки-варианты (дополнительно) --- */
+  .choice__chechen {
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-black);
+    color: var(--color-primary-dark);
+  }
+
+  .choice__emoji {
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .choice__swatch {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: 2px solid var(--color-border);
+  }
+  .choice__swatch--lg {
+    width: 3.25rem;
+    height: 3.25rem;
+  }
+
+  .card--selected {
+    border-color: var(--color-info);
+    box-shadow: 0 0 0 3px var(--color-info-bg);
+  }
+
+  /* --- Игра «найди пары» --- */
+  .game__options--match {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .card--match {
+    min-height: 5rem;
+  }
+  .card__emoji {
+    font-size: 2.5rem;
+    line-height: 1;
+  }
+
+  /* --- Игра «собери слово» --- */
+  .spell__target {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+  .spell__russian {
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+  }
+  .spell__answer {
+    min-height: 3.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+  .spell__placed {
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-black);
+    color: var(--color-primary-dark);
+    animation: star-pop 0.3s ease;
+  }
+  .spell__tiles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    justify-content: center;
+  }
+  .spell__tile {
+    min-width: 3.25rem;
+    min-height: 3.25rem;
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-black);
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    color: var(--color-primary-dark);
+    cursor: pointer;
+    transition: transform var(--transition-fast), background-color var(--transition-fast);
+  }
+  .spell__tile:hover {
+    background-color: var(--color-primary-bg);
+  }
+  .spell__tile:active {
+    transform: scale(0.92);
+  }
+  .spell__tile--used {
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  /* --- Таймер (викторина на скорость) --- */
+  .timer {
+    width: 100%;
+    height: 0.75rem;
+    background-color: var(--color-border);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+    margin-bottom: var(--space-4);
+  }
+  .timer__fill {
+    height: 100%;
+    width: 100%;
+    background-color: var(--color-accent);
+    border-radius: var(--radius-pill);
+    transition: width 1s linear;
+  }
 </style>

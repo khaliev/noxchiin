@@ -43,6 +43,14 @@
           "type": "boolean",
           "description": "true — тема в разработке (показывается на карте, но закрыта)."
         },
+        "games": {
+          "type": "array",
+          "description": "Доступные мини-игры для этой темы.",
+          "items": {
+            "type": "string",
+            "enum": ["listen", "match", "spell", "speed"]
+          }
+        },
         "items": {
           "type": "array",
           "description": "Карточки темы: буквы, слова, цифры или цвета. Может быть пустым, если тема ещё не готова.",
@@ -107,6 +115,18 @@
         "image": {
           "type": "string",
           "description": "Путь к картинке/иконке от корня сайта."
+        },
+        "emoji": {
+          "type": "string",
+          "description": "Эмодзи-иконка (для слов: еда, животные, тело) — визуал без файлов."
+        },
+        "color": {
+          "type": "string",
+          "description": "Цвет в формате HEX (для темы «Цвета») — рисуется как цветной кружок."
+        },
+        "numeral": {
+          "type": "string",
+          "description": "Цифра (для темы «Цифры»), например '7'."
         },
         "example": {
           "$ref": "#/$defs/localizedText",

@@ -33,6 +33,7 @@ export function createDefaultState() {
       name: '',
       avatar: 'wolf',
       xp: 0,
+      ageGroup: '5-8', // возрастной режим: '5-8' или '9+'
     },
     // Прогресс по каждой теме: topicId -> статистика
     topics: {},
@@ -73,6 +74,7 @@ function normalizeState(raw) {
   state.player.xp = Number(state.player.xp) || 0;
   state.player.name = typeof state.player.name === 'string' ? state.player.name : '';
   state.player.avatar = typeof state.player.avatar === 'string' ? state.player.avatar : 'wolf';
+  state.player.ageGroup = state.player.ageGroup === '9+' ? '9+' : '5-8';
 
   // topics — словарь, а не массив
   state.topics = (state.topics && typeof state.topics === 'object' && !Array.isArray(state.topics))

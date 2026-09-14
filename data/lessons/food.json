@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "topic": {
+    "id": "food",
+    "title": { "ru": "Еда", "ce": "Юург" },
+    "description": {
+      "ru": "Продукты и блюда — хлеб, вода, молоко и другое.",
+      "ce": "Юург: бепиг, хи, шура кхин а."
+    },
+    "order": 5,
+    "icon": "🍞",
+    "ageGroup": "all",
+    "games": ["match", "spell"],
+    "items": [
+      { "id": "food-bread", "type": "word", "chechen": "бепиг", "russian": "хлеб", "transcription": "бепиг", "emoji": "🍞", "audio": "/audio/food/food-bread.mp3", "ageGroup": "all" },
+      { "id": "food-water", "type": "word", "chechen": "хи", "russian": "вода", "transcription": "хи", "emoji": "💧", "audio": "/audio/food/food-water.mp3", "ageGroup": "all" },
+      { "id": "food-milk", "type": "word", "chechen": "шура", "russian": "молоко", "transcription": "шура", "emoji": "🥛", "audio": "/audio/food/food-milk.mp3", "ageGroup": "all" },
+      { "id": "food-meat", "type": "word", "chechen": "жижиг", "russian": "мясо", "transcription": "жижиг", "emoji": "🥩", "audio": "/audio/food/food-meat.mp3", "ageGroup": "all" },
+      { "id": "food-apple", "type": "word", "chechen": "Ӏаж", "russian": "яблоко", "transcription": "Iаж", "emoji": "🍎", "audio": "/audio/food/food-apple.mp3", "ageGroup": "all" },
+      { "id": "food-cheese", "type": "word", "chechen": "нехча", "russian": "сыр", "transcription": "нехча", "emoji": "🧀", "audio": "/audio/food/food-cheese.mp3", "ageGroup": "all" },
+      { "id": "food-tea", "type": "word", "chechen": "чай", "russian": "чай", "transcription": "чай", "emoji": "🍵", "audio": "/audio/food/food-tea.mp3", "ageGroup": "all" },
+      { "id": "food-honey", "type": "word", "chechen": "моз", "russian": "мёд", "transcription": "моз", "emoji": "🍯", "audio": "/audio/food/food-honey.mp3", "ageGroup": "9+" },
+      { "id": "food-salt", "type": "word", "chechen": "туьха", "russian": "соль", "transcription": "туьха", "emoji": "🧂", "audio": "/audio/food/food-salt.mp3", "ageGroup": "9+" }
+    ]
+  }
+}

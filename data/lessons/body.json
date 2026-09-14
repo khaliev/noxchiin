@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "topic": {
+    "id": "body",
+    "title": { "ru": "Тело", "ce": "ДегӀ" },
+    "description": {
+      "ru": "Части тела — голова, руки, ноги и другое.",
+      "ce": "ДегӀан меженаш."
+    },
+    "order": 7,
+    "icon": "🖐️",
+    "ageGroup": "all",
+    "games": ["match", "listen"],
+    "items": [
+      { "id": "body-head", "type": "word", "chechen": "корта", "russian": "голова", "transcription": "корта", "emoji": "🗣️", "audio": "/audio/body/body-head.mp3", "ageGroup": "all" },
+      { "id": "body-hand", "type": "word", "chechen": "куьг", "russian": "рука", "transcription": "куьг", "emoji": "✋", "audio": "/audio/body/body-hand.mp3", "ageGroup": "all" },
+      { "id": "body-leg", "type": "word", "chechen": "ког", "russian": "нога", "transcription": "ког", "emoji": "🦵", "audio": "/audio/body/body-leg.mp3", "ageGroup": "all" },
+      { "id": "body-eye", "type": "word", "chechen": "бӀаьрг", "russian": "глаз", "transcription": "бIаьрг", "emoji": "👁️", "audio": "/audio/body/body-eye.mp3", "ageGroup": "all" },
+      { "id": "body-ear", "type": "word", "chechen": "лерг", "russian": "ухо", "transcription": "лерг", "emoji": "👂", "audio": "/audio/body/body-ear.mp3", "ageGroup": "all" },
+      { "id": "body-nose", "type": "word", "chechen": "мара", "russian": "нос", "transcription": "мара", "emoji": "👃", "audio": "/audio/body/body-nose.mp3", "ageGroup": "all" },
+      { "id": "body-mouth", "type": "word", "chechen": "бага", "russian": "рот", "transcription": "бага", "emoji": "👄", "audio": "/audio/body/body-mouth.mp3", "ageGroup": "all" },
+      { "id": "body-tooth", "type": "word", "chechen": "церг", "russian": "зуб", "transcription": "церг", "emoji": "🦷", "audio": "/audio/body/body-tooth.mp3", "ageGroup": "9+" },
+      { "id": "body-heart", "type": "word", "chechen": "дог", "russian": "сердце", "transcription": "дог", "emoji": "❤️", "audio": "/audio/body/body-heart.mp3", "ageGroup": "9+" }
+    ]
+  }
+}

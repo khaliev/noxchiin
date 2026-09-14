@@ -4,13 +4,24 @@
     "id": "words",
     "title": { "ru": "Базовые слова", "ce": "Коьрта дешнаш" },
     "description": {
-      "ru": "Первые важные слова: семья, приветствия, дом.",
-      "ce": "Дуьххьарлера дешнаш: доьзал, маршалла, цӀа."
+      "ru": "Первые важные слова: семья и приветствия.",
+      "ce": "Дуьххьарлера дешнаш: доьзал а, маршалла а."
     },
     "order": 4,
     "icon": "💬",
     "ageGroup": "all",
-    "comingSoon": true,
-    "items": []
+    "games": ["listen", "spell"],
+    "items": [
+      { "id": "word-mother", "type": "word", "chechen": "нана", "russian": "мама", "transcription": "нана", "emoji": "👩", "audio": "/audio/words/word-mother.mp3", "ageGroup": "all" },
+      { "id": "word-father", "type": "word", "chechen": "да", "russian": "папа", "transcription": "да", "emoji": "👨", "audio": "/audio/words/word-father.mp3", "ageGroup": "all" },
+      { "id": "word-brother", "type": "word", "chechen": "ваша", "russian": "брат", "transcription": "ваша", "emoji": "🧑", "audio": "/audio/words/word-brother.mp3", "ageGroup": "all" },
+      { "id": "word-sister", "type": "word", "chechen": "йиша", "russian": "сестра", "transcription": "йиша", "emoji": "👧", "audio": "/audio/words/word-sister.mp3", "ageGroup": "all" },
+      { "id": "word-son", "type": "word", "chechen": "кӀант", "russian": "сын / мальчик", "transcription": "кIант", "emoji": "👦", "audio": "/audio/words/word-son.mp3", "ageGroup": "all" },
+      { "id": "word-daughter", "type": "word", "chechen": "йоӀ", "russian": "дочь / девочка", "transcription": "йоI", "emoji": "👧", "audio": "/audio/words/word-daughter.mp3", "ageGroup": "all" },
+      { "id": "word-grandfather", "type": "word", "chechen": "деда", "russian": "дедушка", "transcription": "деда", "emoji": "👴", "audio": "/audio/words/word-grandfather.mp3", "ageGroup": "all" },
+      { "id": "word-hello", "type": "word", "chechen": "салам", "russian": "привет", "transcription": "салам", "emoji": "👋", "audio": "/audio/words/word-hello.mp3", "ageGroup": "all" },
+      { "id": "word-thanks", "type": "word", "chechen": "баркалла", "russian": "спасибо", "transcription": "баркалла", "emoji": "🙏", "audio": "/audio/words/word-thanks.mp3", "ageGroup": "all" },
+      { "id": "word-friend", "type": "word", "chechen": "доттагӀ", "russian": "друг", "transcription": "доттагI", "emoji": "🤝", "audio": "/audio/words/word-friend.mp3", "ageGroup": "9+" }
+    ]
   }
 }

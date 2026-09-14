@@ -10,7 +10,28 @@
     "order": 2,
     "icon": "🔢",
     "ageGroup": "all",
-    "comingSoon": true,
-    "items": []
+    "games": ["listen", "speed"],
+    "items": [
+      { "id": "num-1", "type": "number", "chechen": "цхьаъ", "russian": "один", "numeral": "1", "transcription": "цхьа", "audio": "/audio/numbers/num-1.mp3", "ageGroup": "all" },
+      { "id": "num-2", "type": "number", "chechen": "шиъ", "russian": "два", "numeral": "2", "transcription": "ши", "audio": "/audio/numbers/num-2.mp3", "ageGroup": "all" },
+      { "id": "num-3", "type": "number", "chechen": "кхоъ", "russian": "три", "numeral": "3", "transcription": "кхо", "audio": "/audio/numbers/num-3.mp3", "ageGroup": "all" },
+      { "id": "num-4", "type": "number", "chechen": "диъ", "russian": "четыре", "numeral": "4", "transcription": "ди", "audio": "/audio/numbers/num-4.mp3", "ageGroup": "all" },
+      { "id": "num-5", "type": "number", "chechen": "пхиъ", "russian": "пять", "numeral": "5", "transcription": "пхи", "audio": "/audio/numbers/num-5.mp3", "ageGroup": "all" },
+      { "id": "num-6", "type": "number", "chechen": "ялх", "russian": "шесть", "numeral": "6", "transcription": "ялх", "audio": "/audio/numbers/num-6.mp3", "ageGroup": "all" },
+      { "id": "num-7", "type": "number", "chechen": "ворхӀ", "russian": "семь", "numeral": "7", "transcription": "ворх", "audio": "/audio/numbers/num-7.mp3", "ageGroup": "all" },
+      { "id": "num-8", "type": "number", "chechen": "бархӀ", "russian": "восемь", "numeral": "8", "transcription": "барх", "audio": "/audio/numbers/num-8.mp3", "ageGroup": "all" },
+      { "id": "num-9", "type": "number", "chechen": "исс", "russian": "девять", "numeral": "9", "transcription": "исс", "audio": "/audio/numbers/num-9.mp3", "ageGroup": "all" },
+      { "id": "num-10", "type": "number", "chechen": "итт", "russian": "десять", "numeral": "10", "transcription": "итт", "audio": "/audio/numbers/num-10.mp3", "ageGroup": "all" },
+      { "id": "num-11", "type": "number", "chechen": "цхьайтта", "russian": "одиннадцать", "numeral": "11", "transcription": "цхьайтта", "audio": "/audio/numbers/num-11.mp3", "ageGroup": "9+" },
+      { "id": "num-12", "type": "number", "chechen": "шийтта", "russian": "двенадцать", "numeral": "12", "transcription": "шийтта", "audio": "/audio/numbers/num-12.mp3", "ageGroup": "9+" },
+      { "id": "num-13", "type": "number", "chechen": "кхойтта", "russian": "тринадцать", "numeral": "13", "transcription": "кхойтта", "audio": "/audio/numbers/num-13.mp3", "ageGroup": "9+" },
+      { "id": "num-14", "type": "number", "chechen": "дейтта", "russian": "четырнадцать", "numeral": "14", "transcription": "дейтта", "audio": "/audio/numbers/num-14.mp3", "ageGroup": "9+" },
+      { "id": "num-15", "type": "number", "chechen": "пхийтта", "russian": "пятнадцать", "numeral": "15", "transcription": "пхийтта", "audio": "/audio/numbers/num-15.mp3", "ageGroup": "9+" },
+      { "id": "num-16", "type": "number", "chechen": "ялхийтта", "russian": "шестнадцать", "numeral": "16", "transcription": "ялхийтта", "audio": "/audio/numbers/num-16.mp3", "ageGroup": "9+" },
+      { "id": "num-17", "type": "number", "chechen": "вуьрхӀийтта", "russian": "семнадцать", "numeral": "17", "transcription": "вуьрхийтта", "audio": "/audio/numbers/num-17.mp3", "ageGroup": "9+" },
+      { "id": "num-18", "type": "number", "chechen": "берхӀийтта", "russian": "восемнадцать", "numeral": "18", "transcription": "берхийтта", "audio": "/audio/numbers/num-18.mp3", "ageGroup": "9+" },
+      { "id": "num-19", "type": "number", "chechen": "ткъайоьсна", "russian": "девятнадцать", "numeral": "19", "transcription": "ткъайоьсна", "audio": "/audio/numbers/num-19.mp3", "ageGroup": "9+" },
+      { "id": "num-20", "type": "number", "chechen": "ткъа", "russian": "двадцать", "numeral": "20", "transcription": "ткъа", "audio": "/audio/numbers/num-20.mp3", "ageGroup": "9+" }
+    ]
   }
 }

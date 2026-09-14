@@ -11,6 +11,7 @@
 import { getAllTopics, getPreviousTopic } from './lessons.js';
 import { loadState } from './storage.js';
 import { updateHud } from './hud.js';
+import { applyAgeMode, setAgeMode } from './ageMode.js';
 
 /** Показывает временную подсказку внизу экрана. */
 function showToast(message) {
@@ -59,6 +60,8 @@ function renderStars(card, topic, state) {
 export function mountTopicMap() {
   const state = loadState(window.localStorage);
   updateHud(state);
+  applyAgeMode(state);
+  mountAgeToggle(state);
 
   const topics = getAllTopics();
   const cards = document.querySelectorAll('[data-topic-id]');
@@ -87,6 +90,29 @@ export function mountTopicMap() {
         const prevTitle = prev ? prev.title.ru : '';
         showToast(`Сначала пройди тему «${prevTitle}» 🔒`);
       }
+    });
+  });
+}
+
+/** Подключает переключатель возраста (5–8 / 9+). */
+function mountAgeToggle(state) {
+  const buttons = document.querySelectorAll('[data-age]');
+  if (buttons.length === 0) return;
+
+  const storage = window.localStorage;
+  const reflect = () => {
+    buttons.forEach((btn) => {
+      const active = btn.dataset.age === state.player.ageGroup;
+      btn.classList.toggle('age-toggle__btn--active', active);
+      btn.setAttribute('aria-pressed', String(active));
+    });
+  };
+
+  reflect();
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      setAgeMode(state, storage, btn.dataset.age);
+      reflect();
     });
   });
 }

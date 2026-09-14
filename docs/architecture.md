@@ -53,9 +53,12 @@
 - `storage.js` — прогресс в `localStorage` с версионированием и валидацией.
 - `gamification.js` — чистые функции: звёзды, XP, уровень, сердечки.
 - `quiz.js` — генерация вопросов (выбор правильного + дистракторы).
+- `spelling.js` — разбивка чеченского слова на буквы-графемы (для игры «собери слово»).
 - `audioPlayer.js` — проигрывание звука с обработкой ошибок.
+- `ageMode.js` — возрастные режимы (5–8 / 9+).
+- `games/` — мини-игры: `listenChoose`, `matchPairs`, `spellWord`, `speedQuiz`.
 - `hud.js` / `topicMap.js` / `lessonGame.js` — клиентские контроллеры DOM
-  (шапка, карта тем, экран урока).
+  (шапка, карта тем, диспетчер урока).
 - `scripts/build-sw.mjs` — сборка Service Worker (Workbox) после `astro build`.
 
 ## Дизайн-система

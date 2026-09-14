@@ -26,6 +26,12 @@ const totalLessons = topics.filter((t) => !t.comingSoon).length;
       <p class="section__meta">{totalLessons} тем · от простого к сложному</p>
     </div>
 
+    <!-- Переключатель возраста: 5–8 лет — крупнее и проще, 9+ — сложнее -->
+    <div class="age-toggle" role="group" aria-label="Возрастной режим">
+      <button class="age-toggle__btn" data-age="5-8" aria-pressed="true">🧸 5–8 лет</button>
+      <button class="age-toggle__btn" data-age="9+" aria-pressed="false">📚 9+ лет</button>
+    </div>
+
     <ol class="topic-map">
       {
         topics.map((topic) => {
@@ -113,6 +119,37 @@ const totalLessons = topics.filter((t) => !t.comingSoon).length;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
     gap: var(--space-4);
+  }
+
+  .age-toggle {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-5);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .age-toggle__btn {
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-pill);
+    border: 2px solid var(--color-border);
+    background-color: var(--color-surface);
+    font-family: inherit;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--text-md);
+    color: var(--color-text-secondary);
+    transition: background-color var(--transition-fast), border-color var(--transition-fast);
+  }
+
+  .age-toggle__btn--active {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #fff;
+  }
+
+  .age-toggle__btn:focus-visible {
+    outline: 3px solid var(--color-info);
+    outline-offset: 2px;
   }
 
   .topic-card {
