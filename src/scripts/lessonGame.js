@@ -161,7 +161,10 @@ function renderStart(container, topic, availableGames, onPick) {
     const game = GAMES[gameId];
     if (!game) continue;
     const btn = el('button', 'btn btn--secondary btn--large game-picker__btn');
-    btn.innerHTML = `<span aria-hidden="true">${game.emoji}</span> ${game.title}`;
+    // Безопасная сборка кнопки DOM-узлами (без innerHTML).
+    const icon = el('span', '', game.emoji);
+    icon.setAttribute('aria-hidden', 'true');
+    btn.append(icon, document.createTextNode(` ${game.title}`));
     btn.addEventListener('click', () => onPick(gameId));
     list.appendChild(btn);
   }

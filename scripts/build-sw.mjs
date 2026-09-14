@@ -41,6 +41,9 @@ const { count, size } = await generateSW({
   skipWaiting: true,
   clientsClaim: true,
 
+  // Удаляем устаревшие кэши от предыдущих версий при активации нового SW.
+  cleanupOutdatedCaches: true,
+
   runtimeCaching: [
     {
       // Аудио букв/слов — cache-first, 90 дней.

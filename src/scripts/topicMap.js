@@ -48,11 +48,14 @@ function renderStars(card, topic, state) {
   const starsEl = card.querySelector('[data-stars]');
   if (!starsEl) return;
   const earned = state.topics[topic.id]?.stars ?? 0;
-  let html = '';
+  // Строим звёзды DOM-узлами (без innerHTML) — безопасно.
+  starsEl.replaceChildren();
   for (let i = 0; i < 3; i++) {
-    html += `<span class="star ${i < earned ? 'star--earned' : ''}">★</span>`;
+    const star = document.createElement('span');
+    star.className = `star ${i < earned ? 'star--earned' : ''}`;
+    star.textContent = '★';
+    starsEl.appendChild(star);
   }
-  starsEl.innerHTML = html;
   starsEl.setAttribute('aria-label', `${earned} из 3 звёзд`);
 }
 

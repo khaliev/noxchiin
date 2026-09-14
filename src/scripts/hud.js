@@ -17,10 +17,15 @@ export function updateHud(state) {
 
   if (heartsEl) {
     const { count, max } = state.hearts;
-    const filled = '♥'.repeat(count);
-    const empty = '♡'.repeat(Math.max(0, max - count));
-    // Отрисовка через текст — безопасно (без innerHTML с пользовательскими данными).
-    heartsEl.innerHTML = `<span class="heart">${filled}</span><span class="heart heart--empty">${empty}</span>`;
+    // Строим сердечки DOM-узлами (не innerHTML) — так безопаснее от XSS.
+    heartsEl.replaceChildren();
+    const filled = document.createElement('span');
+    filled.className = 'heart';
+    filled.textContent = '♥'.repeat(count);
+    const empty = document.createElement('span');
+    empty.className = 'heart heart--empty';
+    empty.textContent = '♡'.repeat(Math.max(0, max - count));
+    heartsEl.append(filled, empty);
     heartsEl.setAttribute('aria-label', `${count} из ${max} сердечек`);
   }
 

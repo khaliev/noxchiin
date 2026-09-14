@@ -36,6 +36,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
 
+    <!-- Content-Security-Policy (уровень meta — сработает даже без заголовков хоста).
+         Полный набор security-заголовков задаётся на уровне хостинга
+         (см. vercel.json и public/_headers). -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'"
+    />
+
     <!-- Open Graph (превью при шаринге в соцсетях) — полная настройка в Этапе 6 -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
@@ -88,15 +96,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
       </div>
     </footer>
 
-    <!-- Регистрация Service Worker (офлайн-режим). SW собирается в dist/sw.js. -->
-    <script is:inline>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').catch(() => {
-            // SW недоступен (например, старый браузер) — просто работаем без офлайна.
-          });
-        });
-      }
+    <!-- Регистрация Service Worker (офлайн-режим). Вынесена во внешний модуль,
+         чтобы CSP могла быть строгой (script-src 'self' без unsafe-inline). -->
+    <script>
+      import '../scripts/registerSW.js';
     </script>
   </body>
 </html>

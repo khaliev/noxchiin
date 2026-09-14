@@ -13,4 +13,13 @@ export default defineConfig({
   build: {
     inlineStylesheets: 'auto',
   },
+
+  vite: {
+    build: {
+      // Не инлайним JS-скрипты в HTML. Это нужно для строгой CSP
+      // (script-src 'self' без 'unsafe-inline') — иначе Astro вставляет
+      // маленькие скрипты (например, регистрацию Service Worker) инлайн.
+      assetsInlineLimit: 0,
+    },
+  },
 });
