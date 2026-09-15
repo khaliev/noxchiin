@@ -1,14 +1,18 @@
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 // Настройки проекта «Нохчийн Мотт».
 //
+// ВАЖНО: замени site на реальный домен перед публикацией.
 // Service Worker генерируется отдельным шагом (scripts/build-sw.mjs) через
-// Workbox ПОСЛЕ сборки. Так мы полностью контролируем кэширование и не
-// зависим от интеграций, которые могут отставать от новых версий Astro.
+// Workbox ПОСЛЕ сборки.
 export default defineConfig({
   site: 'https://noxchiin-mott.example.com',
   compressHTML: true,
+
+  // Автогенерация sitemap-index.xml (из маршрутов + site).
+  integrations: [sitemap()],
 
   build: {
     inlineStylesheets: 'auto',

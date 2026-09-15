@@ -9,15 +9,21 @@
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
 }
 
 const {
   title = 'Нохчийн Мотт — учим чеченский язык играя',
-  description = 'Бесплатная игра для детей и подростков: чеченский алфавит, цифры, цвета и слова в игровом формате.',
+  description = 'Бесплатная PWA-игра для детей и подростков: чеченский алфавит, цифры, цвета и слова в игровом формате. Учим язык диаспоры офлайн.',
+  image = '/icons/icon-512.png',
 } = Astro.props;
 
-// Абсолютный адрес сайта (берётся из astro.config.mjs) для Open Graph.
+// Абсолютные адреса (из astro.config.mjs) — нужны для Open Graph / canonical.
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImage = new URL(image, Astro.site).toString();
+
+// Cookieless-аналитика (Plausible). Включается только если задан домен.
+const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
 ---
 
 <!doctype html>
@@ -30,6 +36,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
 
+    <!-- hreflang: основной язык русский. При появлении ce/en-версий добавить
+         их alternate-ссылки сюда. -->
+    <link rel="alternate" hreflang="ru" href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
+
     <!-- PWA: манифест, иконки и цвет темы -->
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="theme-color" content="#1b7a46" />
@@ -38,21 +49,32 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 
     <!-- Content-Security-Policy (уровень meta — сработает даже без заголовков хоста).
          Полный набор security-заголовков задаётся на уровне хостинга
-         (см. vercel.json и public/_headers). -->
+         (см. vercel.json и public/_headers).
+         script-src включает plausible.io только для cookieless-аналитики. -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'"
+      content="default-src 'self'; script-src 'self' https://plausible.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self' https://plausible.io; worker-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'"
     />
 
-    <!-- Open Graph (превью при шаринге в соцсетях) — полная настройка в Этапе 6 -->
+    <!-- Open Graph (превью при шаринге в соцсетях) -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Нохчийн Мотт" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
     <meta property="og:locale" content="ru_RU" />
+    <meta property="og:locale:alternate" content="ru_FR" />
 
-    <!-- Шрифт Nunito (кириллица + латиница) с font-display: swap.
-         На Этапе 2 шрифт будет кэшироваться Service Worker для офлайн-режима. -->
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Шрифт Nunito (кириллица + латиница) с font-display: swap. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -63,7 +85,16 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <link rel="stylesheet" href="/src/styles/global.css" />
     <link rel="stylesheet" href="/src/styles/components.css" />
 
-    <!-- Пока нет интерактива (появится на Этапе 2) — JS подключаем лениво -->
+    {
+      plausibleDomain && (
+        <script
+          is:inline
+          defer
+          data-domain={plausibleDomain}
+          src="https://plausible.io/js/script.js"
+        ></script>
+      )
+    }
   </head>
 
   <body>

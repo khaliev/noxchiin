@@ -10,9 +10,75 @@ import { getAllTopics } from '../scripts/lessons.js';
 
 const topics = getAllTopics();
 const totalLessons = topics.filter((t) => !t.comingSoon).length;
+
+// --- FAQ (видимый блок + разметка FAQPage для GEO/SEO) ---
+const faq = [
+  {
+    q: 'Что такое «Нохчийн Мотт»?',
+    a: 'Нохчийн Мотт — бесплатная PWA-игра для изучения чеченского языка детьми от 5 лет. Ребёнок в игровом формате учит алфавит, цифры, цвета и базовые слова: слушает звуки, выбирает правильные ответы, собирает слова из букв и зарабатывает звёзды.',
+  },
+  {
+    q: 'Как научить ребёнка чеченскому языку, если семья живёт за границей?',
+    a: 'Для детей из диаспоры главное — регулярность и игровой формат. Приложение даёт короткие ежедневные уроки с озвучкой носителя языка, системой сердечек, звёзд и ежедневной серией, что мотивирует заниматься каждый день даже без учителя. Звуки записываются носителями языка, а не синтезатором, чтобы правильно передать специфичные чеченские звуки (абруптивные «пӏ, тӏ, кӏ», гортанная смычка «ӏ»).',
+  },
+  {
+    q: 'Для какого возраста подходит приложение?',
+    a: 'От 5 лет и старше. Есть два режима: для 5–8 лет — крупные кнопки, больше картинок и меньше текста; для 9+ — более сложная лексика и письмо.',
+  },
+  {
+    q: 'Работает ли «Нохчийн Мотт» без интернета?',
+    a: 'Да, это PWA: после первой загрузки приложение работает полностью офлайн — можно заниматься в дороге или в самолёте. Прогресс хранится на устройстве ребёнка.',
+  },
+  {
+    q: 'Нужно ли регистрироваться или передавать личные данные?',
+    a: 'Нет, регистрация и аккаунты не требуются. Весь прогресс хранится локально на устройстве. Приложение не собирает личные данные детей (аналитика, если включена, работает без cookies).',
+  },
+  {
+    q: 'Какие темы доступны?',
+    a: 'Чеченский алфавит (49 букв), цифры от 1 до 20, цвета, базовые слова (семья, приветствия), а также тематические блоки: еда, животные, части тела. Темы открываются по порядку.',
+  },
+  {
+    q: 'Кто озвучивает слова и буквы?',
+    a: 'Аудио записывается носителями чеченского языка. Обычный синтез речи (TTS) не умеет правильно произносить специфичные чеченские звуки, поэтому используются записи носителей (или проверенные открытые аудио-ресурсы как эталон).',
+  },
+];
+
+// --- Структурированные данные Schema.org ---
+const siteUrl = Astro.site?.toString() ?? 'https://noxchiin-mott.example.com';
+
+const webAppJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Нохчийн Мотт',
+  alternateName: 'Noxchiin Mott',
+  url: siteUrl,
+  description: 'Бесплатная PWA-игра для изучения чеченского языка детьми и подростками от 5 лет.',
+  applicationCategory: 'EducationalApplication',
+  operatingSystem: 'Web',
+  inLanguage: ['ru', 'ce'],
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Нохчийн Мотт',
+  },
+};
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
 ---
 
 <Layout>
+  <!-- Структурированные данные Schema.org (JSON-LD) -->
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(webAppJsonLd)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+
   <section class="hero hero--compact">
     <div class="container">
       <h1 class="hero__title">Нохчийн <span>Мотт</span></h1>
@@ -93,6 +159,21 @@ const totalLessons = topics.filter((t) => !t.comingSoon).length;
         <h3>Собирай звёзды</h3>
         <p>Отвечай верно — получай звёзды и очки опыта.</p>
       </article>
+    </div>
+  </section>
+
+  <!-- FAQ: видимый блок (GEO-оптимизация для ИИ-поисковиков) + FAQPage разметка выше -->
+  <section class="container section" aria-labelledby="faq-title">
+    <h2 id="faq-title">Частые вопросы</h2>
+    <div class="faq">
+      {
+        faq.map((item) => (
+          <details class="faq__item">
+            <summary>{item.q}</summary>
+            <p>{item.a}</p>
+          </details>
+        ))
+      }
     </div>
   </section>
 </Layout>
@@ -249,5 +330,49 @@ const totalLessons = topics.filter((t) => !t.comingSoon).length;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
     gap: var(--space-4);
+  }
+
+  /* FAQ */
+  .faq {
+    max-width: 44rem;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .faq__item {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+  }
+  .faq__item summary {
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    list-style: none;
+    position: relative;
+    padding-right: var(--space-4);
+  }
+  .faq__item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq__item summary::after {
+    content: '+';
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-weight: var(--font-weight-black);
+  }
+  .faq__item[open] summary::after {
+    content: '−';
+  }
+  .faq__item summary:focus-visible {
+    outline: 3px solid var(--color-info);
+    outline-offset: 2px;
+  }
+  .faq__item p {
+    margin-top: var(--space-2);
+    margin-bottom: 0;
+    color: var(--color-text-secondary);
   }
 </style>
