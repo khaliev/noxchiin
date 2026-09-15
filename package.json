@@ -11,6 +11,7 @@
     "check": "astro check",
     "icons": "node scripts/generate-icons.mjs",
     "sfx": "node scripts/generate-sfx.mjs",
+    "audio:check": "node scripts/check-audio.mjs",
     "test": "vitest run",
     "test:watch": "vitest"
   },

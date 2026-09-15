@@ -208,6 +208,7 @@ function renderResult(container, { correct, total, stars, xp, streak = 0 }, topi
   const modal = el('div', 'modal');
   modal.setAttribute('role', 'dialog');
   modal.setAttribute('aria-modal', 'true');
+  modal.tabIndex = -1;
 
   modal.appendChild(el('h2', 'modal__title', stars > 0 ? 'Отлично!' : 'Хорошая попытка!'));
 
@@ -239,4 +240,6 @@ function renderResult(container, { correct, total, stars, xp, streak = 0 }, topi
   modal.append(body, actions);
   wrap.appendChild(modal);
   container.replaceChildren(wrap);
+  // Переводим фокус на модалку — важно для доступности (скринридеры).
+  modal.focus();
 }

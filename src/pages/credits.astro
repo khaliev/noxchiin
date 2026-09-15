@@ -1,0 +1,97 @@
+---
+// ============================================================================
+// credits.astro — благодарности источникам чеченского языка/культуры
+// и информация об авторских правах на аудио.
+// ============================================================================
+
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Благодарности — Нохчийн Мотт" description="Источники чеченского языка и информация об авторских правах на аудио.">
+  <section class="container section">
+    <header class="page-header">
+      <a href="/" class="page-header__back">← На главную</a>
+      <h1 class="page-header__title">Благодарности</h1>
+    </header>
+
+    <div class="credits">
+      <article class="panel">
+        <h2 class="panel__title">Спасибо сообществу</h2>
+        <p>Этот проект — для детей из чеченской диаспоры и всех, кто хочет выучить
+        и не забыть язык своих близких. Спасибо семьям, учителям и волонтёрам,
+        которые делятся языком и помогают его сохранять.</p>
+      </article>
+
+      <article class="panel">
+        <h2 class="panel__title">Источники языка и произношения</h2>
+        <p>При подготовке транскрипций и методики озвучки мы сверялись со следующими
+        открытыми ресурсами (как эталон произношения носителей):</p>
+        <ul class="source-list">
+          <li><a href="https://forvo.com/languages/ce/" rel="noopener" target="_blank">Forvo — произношения чеченских слов носителями</a></li>
+          <li><a href="https://audiolang.info/chechenskij-alfavit" rel="noopener" target="_blank">audiolang.info — чеченский алфавит с аудио</a></li>
+          <li><a href="https://nohchalla.com" rel="noopener" target="_blank">Nohchalla.com — аудиокурс чеченского языка</a></li>
+          <li><a href="https://mylittlewordland.com/course" rel="noopener" target="_blank">mylittlewordland.com — базовый курс</a></li>
+          <li>mp3-словарь «МИР1000» (чеченско-русский)</li>
+        </ul>
+      </article>
+
+      <article class="panel">
+        <h2 class="panel__title">Об авторских правах на аудио</h2>
+        <p>Голосовые озвучки букв и слов записываются <strong>носителями языка</strong>,
+        потому что обычный синтез речи не передаёт специфичные чеченские звуки.</p>
+        <p>Сторонние аудиофайлы используются <strong>только как эталон</strong> для
+        транскрипции и методики озвучки, а не копируются без разрешения. Перед
+        публикацией проекта проверь лицензии и получи разрешение авторов на любые
+        используемые записи — либо перезапиши звук с носителем языка.</p>
+      </article>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-header {
+    text-align: center;
+    margin-bottom: var(--space-5);
+  }
+  .page-header__back {
+    display: inline-block;
+    margin-bottom: var(--space-3);
+    font-weight: var(--font-weight-bold);
+  }
+  .page-header__title {
+    margin-bottom: 0;
+  }
+
+  .credits {
+    max-width: 40rem;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .panel {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: var(--space-5);
+  }
+  .panel__title {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-3);
+  }
+  .panel p {
+    color: var(--color-text-secondary);
+  }
+
+  .source-list {
+    padding-left: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .source-list a {
+    font-weight: var(--font-weight-bold);
+  }
+</style>
